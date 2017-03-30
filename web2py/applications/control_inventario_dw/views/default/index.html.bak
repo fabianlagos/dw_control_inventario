@@ -1,0 +1,27 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'layout.html'}}
+"""
+{{block header}}
+        {{if response.title:}}
+        <h1>{{=response.title}}
+          <small>{{=response.subtitle or ''}}</small></h1>
+        {{pass}}
+"""
+{{end}}
+
+{{if 'message' in globals():}}
+<h2>{{=message}}</h2>
+
+<a href="/control_inventario_dw/default/index">
+    <img src="/control_inventario_dw/static/images/logo_itsec.png" alt="Mi Logo" />
+</a>
+
+{{elif 'content' in globals():}}
+{{=content}}
+{{else:}}
+{{=BEAUTIFY(response._vars)}}
+{{pass}}
+
+{{block right_sidebar}}
+
+{{end}}
