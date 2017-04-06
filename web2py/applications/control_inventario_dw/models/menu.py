@@ -5,7 +5,7 @@
 # Customize your APP title, subtitle and menus here
 # ----------------------------------------------------------------------------------------------------------------------
 
-response.logo = A(B('web', SPAN(2), 'py'), XML('&trade;&nbsp;'),
+response.logo = A(B('ITsec'), XML('&trade;&nbsp;'),
                   _class="navbar-brand", _href="http://www.web2py.com/",
                   _id="web2py-logo")
 response.title = request.application.replace('_', ' ').title()
@@ -49,7 +49,7 @@ def _():
     # useful links to internal and external resources
     # ------------------------------------------------------------------------------------------------------------------
     response.menu += [
-        (T('Productos Disponibles'), False, URL('asd')),
+        (T('Productos Disponibles'), False, URL('show_products')),
     ]
 
 
