@@ -59,3 +59,6 @@ def call():
     return service()
 
 
+def show_products():
+
+    return dict()

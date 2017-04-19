@@ -109,6 +109,33 @@ auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
 
+#Falta el required en los atributos por definir
+
+db.define_table('producto',
+                Field('nombre', 'string'),
+                Field('marca', 'string'),
+                Field('modelo', 'string'))
+
+db.define_table('inventario',
+                Field('id_producto', db.producto),
+                Field('n_serie', 'string'),
+                Field('descripcion', 'string'),
+                Field('disponible', 'boolean'))
+
+db.define_table('categoria',
+                Field('nombre', 'string'),
+                Field('descripcion', 'string'))
+
+db.define_table('categoria_producto',
+                Field('id_producto', db.producto),
+                Field('id_categoria', db.categoria))
+
+db.define_table('prestacion',
+                Field('id_user', db.auth_user),
+                Field('id_inventario', db.inventario),
+                Field('fecha_prestacion', 'datetime'),
+                Field('fecha_devolucion', 'time'))
+
 # -------------------------------------------------------------------------
 # Define your tables below (or better in another model file) for example
 #

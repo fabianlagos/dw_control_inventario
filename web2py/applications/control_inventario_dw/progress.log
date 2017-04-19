@@ -1,2 +1,7 @@
 [2017-03-20 09:04:12] START
 [2017-03-20 09:07:05] EDIT control_inventario_dw/models/menu.py: -91
+[2017-04-13 10:37:55] EDIT control_inventario_dw/controllers/default.py: 0
+[2017-04-19 00:16:21] CREATE default/productos.html: 0
+[2017-04-19 00:16:34] CREATE default/devolver_productos.html: 0
+[2017-04-19 00:16:46] CREATE default/inventario.html: 0
+[2017-04-19 00:29:29] CREATE default/productos_prestados.html: 0

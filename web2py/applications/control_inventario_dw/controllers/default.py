@@ -18,7 +18,7 @@ def index():
     return auth.wiki()
     """
     response.flash = T("Hello World")
-    return dict(message=T('Welcome to web2py!'))
+    return dict(message=T('Bienvenido al Inventario de ITsec'))
 
 
 def user():
@@ -58,7 +58,26 @@ def call():
     """
     return service()
 
+#Esta funcion solo la puede ver el tipo de usuario Administrador
+def productos():
+    #Esto es un SELECT * FROM db.producto
+    consulta = db.producto
 
-def show_products():
+    grid = SQLFORM.grid(consulta, csv=False)
+
+    return dict(grid=grid)
+
+#Esta funcion la puede ver todos los usuarios
+def devolver_productos():
+
+    return dict()
+
+#Esta funcion la pueden ver todos los usuarios
+def inventario():
+
+    return dict()
+
+#Esta funcion la pueden ver el Administrador y Supervisor
+def productos_prestados():
 
     return dict()
