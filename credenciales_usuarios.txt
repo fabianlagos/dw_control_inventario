@@ -1,0 +1,11 @@
+Roles de prueba
+
+Rol admin:
+
+Username: admin
+Password: admin
+
+Rol supervisor:
+
+Username: supervisor
+Password: supervisor

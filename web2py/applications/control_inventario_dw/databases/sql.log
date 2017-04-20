@@ -1,30 +1,31 @@
-timestamp: 2017-04-17T09:07:04.888736
+timestamp: 2017-04-19T23:53:50.693340
 CREATE TABLE auth_user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(128),
     last_name CHAR(128),
     email CHAR(512),
+    username CHAR(128),
     password CHAR(512),
     registration_key CHAR(512),
     reset_password_key CHAR(512),
     registration_id CHAR(512)
 );
 success!
-timestamp: 2017-04-17T09:07:05.058460
+timestamp: 2017-04-19T23:53:50.901027
 CREATE TABLE auth_group(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role CHAR(512),
     description TEXT
 );
 success!
-timestamp: 2017-04-17T09:07:05.203769
+timestamp: 2017-04-19T23:53:51.047923
 CREATE TABLE auth_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2017-04-17T09:07:05.395669
+timestamp: 2017-04-19T23:53:51.214867
 CREATE TABLE auth_permission(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
@@ -33,7 +34,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2017-04-17T09:07:05.574312
+timestamp: 2017-04-19T23:53:51.381887
 CREATE TABLE auth_event(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     time_stamp TIMESTAMP,
@@ -43,7 +44,7 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2017-04-17T09:07:05.764534
+timestamp: 2017-04-19T23:53:51.549213
 CREATE TABLE auth_cas(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -53,7 +54,7 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
-timestamp: 2017-04-17T09:34:14.067192
+timestamp: 2017-04-19T23:53:51.707760
 CREATE TABLE producto(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre CHAR(512),
@@ -61,7 +62,7 @@ CREATE TABLE producto(
     modelo CHAR(512)
 );
 success!
-timestamp: 2017-04-17T09:34:14.229867
+timestamp: 2017-04-19T23:53:51.886980
 CREATE TABLE inventario(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_producto INTEGER REFERENCES producto (id) ON DELETE CASCADE  ,
@@ -70,21 +71,21 @@ CREATE TABLE inventario(
     disponible CHAR(1)
 );
 success!
-timestamp: 2017-04-17T09:34:14.408421
+timestamp: 2017-04-19T23:53:52.075553
 CREATE TABLE categoria(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre CHAR(512),
     descripcion CHAR(512)
 );
 success!
-timestamp: 2017-04-17T09:34:14.587287
+timestamp: 2017-04-19T23:53:52.232041
 CREATE TABLE categoria_producto(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_producto INTEGER REFERENCES producto (id) ON DELETE CASCADE  ,
     id_categoria INTEGER REFERENCES categoria (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2017-04-17T09:34:14.743570
+timestamp: 2017-04-19T23:53:52.389611
 CREATE TABLE prestacion(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_user INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,

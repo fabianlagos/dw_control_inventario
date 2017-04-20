@@ -90,7 +90,9 @@ plugins = PluginManager()
 # -------------------------------------------------------------------------
 # create all tables needed by auth if not custom tables
 # -------------------------------------------------------------------------
-auth.define_tables(username=False, signature=False)
+auth.define_tables(username=True, signature=False)
+auth.settings.create_user_groups = None
+auth.settings.everybody_group_id = 3
 
 # -------------------------------------------------------------------------
 # configure email
@@ -136,24 +138,30 @@ db.define_table('prestacion',
                 Field('fecha_prestacion', 'datetime'),
                 Field('fecha_devolucion', 'time'))
 
-# -------------------------------------------------------------------------
-# Define your tables below (or better in another model file) for example
-#
-# >>> db.define_table('mytable', Field('myfield', 'string'))
-#
-# Fields can be 'string','text','password','integer','double','boolean'
-#       'date','time','datetime','blob','upload', 'reference TABLENAME'
-# There is an implicit 'id integer autoincrement' field
-# Consult manual for more options, validators, etc.
-#
-# More API examples for controllers:
-#
-# >>> db.mytable.insert(myfield='value')
-# >>> rows = db(db.mytable.myfield == 'value').select(db.mytable.ALL)
-# >>> for row in rows: print row.id, row.myfield
-# -------------------------------------------------------------------------
+if (db(db.auth_group).isempty()):
+    auth.add_group('admin', 'admin')
+    auth.add_group('supervisor', 'supervisor')
+    auth.add_group('user_basic', 'user_basic')
 
-# -------------------------------------------------------------------------
-# after defining tables, uncomment below to enable auditing
-# -------------------------------------------------------------------------
-# auth.enable_record_versioning(db)
+
+#Revisar esto
+if not db().select(db.auth_user.ALL).first():
+    id_user = db.auth_user.insert(
+        username = 'admin',
+        password = db.auth_user.password.validate('admin')[0],
+        email = 'null@null.com',
+        first_name = 'admin',
+        last_name = 'Administrator',
+    )
+    auth.del_membership(auth.id_group('user_basic'), id_user)
+    auth.add_membership(auth.id_group('admin'), id_user)
+
+    id_user = db.auth_user.insert(
+        username = 'supervisor',
+        password = db.auth_user.password.validate('supervisor')[0],
+        email = 'null@null.com',
+        first_name = 'supervior',
+        last_name = 'Supervisor',
+    )
+    auth.del_membership(auth.id_group('user_basic'), id_user)
+    auth.add_membership(auth.id_group('supervisor'), id_user)
