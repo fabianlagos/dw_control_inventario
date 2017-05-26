@@ -814,3 +814,11 @@
 127.0.0.1, 2017-04-19 23:54:07, GET, /control_inventario_dw/default/index, HTTP/1.1, 200, 0.023390
 127.0.0.1, 2017-04-19 23:54:10, GET, /control_inventario_dw/default/user/logout, HTTP/1.1, 303, 0.196196
 127.0.0.1, 2017-04-19 23:54:10, GET, /control_inventario_dw/default/index, HTTP/1.1, 200, 0.037416
+127.0.0.1, 2017-05-25 21:52:07, GET, /admin/default/site, HTTP/1.1, 200, 0.066595
+127.0.0.1, 2017-05-25 21:52:08, GET, /favicon.ico, HTTP/1.1, 400, 0.000342
+127.0.0.1, 2017-05-25 21:52:34, GET, /admin/default/site, HTTP/1.1, 200, 0.053515
+127.0.0.1, 2017-05-25 21:52:35, GET, /favicon.ico, HTTP/1.1, 400, 0.000382
+127.0.0.1, 2017-05-25 21:52:37, GET, /, HTTP/1.1, 303, 0.000540
+127.0.0.1, 2017-05-25 21:52:37, GET, /welcome/default/index, HTTP/1.1, 200, 0.044719
+127.0.0.1, 2017-05-25 21:52:37, GET, /, HTTP/1.1, 303, 0.000543
+127.0.0.1, 2017-05-25 21:52:37, GET, /welcome/default/index, HTTP/1.1, 200, 0.040475
