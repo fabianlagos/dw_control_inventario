@@ -94,3 +94,7 @@ CREATE TABLE prestacion(
     fecha_devolucion TIME
 );
 success!
+timestamp: 2017-05-27T01:32:39.859051
+ALTER TABLE prestacion ADD devolucion_pendiente CHAR(1);
+success!
+success!

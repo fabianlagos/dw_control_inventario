@@ -53,7 +53,7 @@ def _():
             (T('Inventario'), False, URL('inventario')),
             (T('Productos'), False, URL('productos')),
             (T('Productos prestados'), False, URL('productos_prestados')),
-            (T('Gestion de usuarios'), False, URL('gestion_usuarios'))
+            (T('Gestion de usuarios'), False, URL('gestion_usuario','lista_usuarios'))
 
 
         ]

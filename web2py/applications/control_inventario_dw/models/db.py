@@ -133,7 +133,8 @@ db.define_table('prestacion',
                 Field('id_user', db.auth_user),
                 Field('id_inventario', db.inventario),
                 Field('fecha_prestacion', 'datetime'),
-                Field('fecha_devolucion', 'time'))
+                Field('fecha_devolucion', 'time'),
+                Field('devolucion_pendiente', 'boolean', default=False))
 
 if (db(db.auth_group).isempty()):
     auth.add_group('admin', 'admin')

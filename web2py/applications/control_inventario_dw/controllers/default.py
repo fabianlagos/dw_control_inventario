@@ -80,4 +80,8 @@ def inventario():
 #Esta funcion la pueden ver el Administrador y Supervisor
 def productos_prestados():
 
-    return dict()
+    query = (db.inventario.disponible == False)
+
+    grid = SQLFORM.grid(query)
+
+    return dict(grid=grid)
