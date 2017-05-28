@@ -295,6 +295,7 @@
 'No records found': 'No se han encontrado registros',
 'Nombre': 'Nombre',
 'Not authorized': 'No autorizado',
+'not authorized': 'not authorized',
 'not in': 'no en',
 'Object or table name': 'Nombre del objeto o tabla',
 'Old password': 'Contraseña vieja',

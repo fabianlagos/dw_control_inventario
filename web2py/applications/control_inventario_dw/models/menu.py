@@ -50,24 +50,24 @@ def _():
     # ------------------------------------------------------------------------------------------------------------------
     if auth.has_membership(1):
         response.menu += [
-            (T('Inventario'), False, URL('default', 'inventario')),
+            (T('Inventario'), False, URL('gestion_inventario', 'inventario')),
             (T('Productos'), False, URL('default', 'productos')),
-            (T('Productos prestados'), False, URL('default','productos_prestados')),
+            (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados')),
             (T('Gestion de usuarios'), False, URL('gestion_usuario','lista_usuarios'))
 
 
         ]
     if auth.has_membership(2):
         response.menu += [
-            (T('Inventario'), False, URL('default','inventario')),
+            (T('Inventario'), False, URL('gestion_inventario','inventario')),
             (T('Devolver producto'), False, URL('default','devolver_productos')),
-            (T('Productos prestados'), False, URL('default','productos_prestados')),
+            (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados')),
 
         ]
     if auth.has_membership(3):
         response.menu += [
-            (T('Inventario'), False, URL('default','inventario')),
-            (T('Productos prestados'), False, URL('default','productos_prestados')),
+            (T('Inventario'), False, URL('gestion_inventario','inventario')),
+            (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados')),
         ]
 
 
