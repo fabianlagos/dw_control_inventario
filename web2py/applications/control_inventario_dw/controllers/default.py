@@ -87,8 +87,14 @@ def inventario():
 #Esta funcion la pueden ver el Administrador y Supervisor
 def productos_prestados():
 
+<<<<<<< HEAD
     prestado = (db.inventario.disponible != True)
 
     grid = SQLFORM.grid(prestado, csv=False)
+=======
+    query = (db.inventario.disponible == False)
+
+    grid = SQLFORM.grid(query)
+>>>>>>> develop
 
     return dict(grid=grid)

@@ -107,6 +107,7 @@ mail.settings.ssl = myconf.get('smtp.ssl') or False
 auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
+auth.settings.actions_disabled.append('register') 
 
 #Falta el required en los atributos por definir
 
@@ -133,7 +134,8 @@ db.define_table('prestacion',
                 Field('id_user', db.auth_user),
                 Field('id_inventario', db.inventario),
                 Field('fecha_prestacion', 'datetime'),
-                Field('fecha_devolucion', 'time'))
+                Field('fecha_devolucion', 'time'),
+                Field('devolucion_pendiente', 'boolean', default=False))
 
 if (db(db.auth_group).isempty()):
     auth.add_group('admin', 'admin')
