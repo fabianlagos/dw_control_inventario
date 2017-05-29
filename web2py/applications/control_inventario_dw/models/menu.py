@@ -50,9 +50,9 @@ def _():
     # ------------------------------------------------------------------------------------------------------------------
     if auth.has_membership(1):
         response.menu += [
-            (T('Inventario'), False, URL('gestion_inventario', 'inventario')),
-            (T('Productos'), False, URL('default', 'productos')),
-            (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados')),
+            (T('Inventario'), False, URL('default', 'inventario')),
+            (T('Productos'), False, URL('gestion_productos', 'productos')),
+            (T('Productos prestados'), False, URL('default','productos_prestados')),
             (T('Gestion de usuarios'), False, URL('gestion_usuario','lista_usuarios'))
 
 
