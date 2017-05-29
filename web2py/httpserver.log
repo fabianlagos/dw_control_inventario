@@ -3150,3 +3150,5 @@
 127.0.0.1, 2017-05-29 00:04:24, GET, /control_inventario_dw/appadmin/hooks, HTTP/1.1, 200, 0.313682
 127.0.0.1, 2017-05-29 00:05:24, GET, /admin/default/todolist.load, HTTP/1.1, 200, 0.058329
 127.0.0.1, 2017-05-29 00:05:24, GET, /control_inventario_dw/appadmin/hooks, HTTP/1.1, 200, 0.277030
+127.0.0.1, 2017-05-29 00:12:24, GET, /admin/default/todolist.load, HTTP/1.1, 200, 0.178001
+127.0.0.1, 2017-05-29 00:12:25, GET, /control_inventario_dw/appadmin/hooks, HTTP/1.1, 200, 0.377215
