@@ -2,7 +2,7 @@ def productos():
     #Esto es un SELECT * FROM db.producto
     consulta = db.producto
 
-    grid = SQLFORM.grid(consulta, csv=False, links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.id]), _class="btn btn-info glyphicon glyphicon-signal")])
+    grid = SQLFORM.grid(consulta, csv=False, links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.id]), _class="btn btn-default glyphicon glyphicon-plus")])
 
     return dict(grid=grid)
 

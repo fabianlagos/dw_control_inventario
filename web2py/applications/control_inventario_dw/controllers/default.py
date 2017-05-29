@@ -73,31 +73,7 @@ def devolver_productos():
     return dict()
 
 
-def inventario():
 
-    estado = (db.inventario.disponible == True)
-
-    links = [lambda row: A('Solicitar',_href=URL("default","inventario",args=[row.id]), _class='button')]
-
-    grid = SQLFORM.grid(estado, links=links, csv=False)
-
-
-    return dict(grid=grid)
-
-#Esta funcion la pueden ver el Administrador y Supervisor
-def productos_prestados():
-
-<<<<<<< HEAD
-    prestado = (db.inventario.disponible != True)
-
-    grid = SQLFORM.grid(prestado, csv=False)
-=======
-    query = (db.inventario.disponible == False)
-
-    grid = SQLFORM.grid(query)
->>>>>>> develop
-
-    return dict(grid=grid)
 
 def agregarainventario():
     form = SQLFORM(db.inventario, fields=['n_serie', 'descripcion', 'disponible'])

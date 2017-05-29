@@ -23,7 +23,6 @@ def solicitar_producto():
 
     grid = SQLFORM.grid(estado, details=False, csv=False, links=links)
 
-    grid = 'hola'
     return grid
 
 #Esta funcion la pueden ver el Administrador y Supervisor
@@ -31,7 +30,7 @@ def productos_prestados():
 
     prestado = (db.inventario.disponible == False)
 
-    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver_producto', vars={'id' : row.id }), target='callback-consultar_1', _class="btn btn-default btn-md glyphicon-ok-sign")]
+    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver_producto', vars={'id' : row.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
 
     grid = SQLFORM.grid(prestado, details=False, csv=False, links=links)
 
@@ -49,8 +48,8 @@ def devolver_producto():
 
     prestado = (db.inventario.disponible == False)
 
-    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver_producto', vars={'id' : row.id }), target='callback-consultar_1', _class="btn btn-default btn-md glyphicon-ok-sign")]
+    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver_producto', vars={'id' : row.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
 
     grid = SQLFORM.grid(prestado, details=False, csv=False, links=links)
-    grid = 'hola'
+
     return grid
