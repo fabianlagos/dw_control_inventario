@@ -3144,3 +3144,9 @@
 127.0.0.1, 2017-05-29 00:01:34, GET, /control_inventario_dw/default/productos_prestados, HTTP/1.1, 200, 0.239957
 127.0.0.1, 2017-05-29 00:02:24, GET, /admin/default/todolist.load, HTTP/1.1, 200, 0.056378
 127.0.0.1, 2017-05-29 00:02:24, GET, /control_inventario_dw/appadmin/hooks, HTTP/1.1, 200, 0.242460
+127.0.0.1, 2017-05-29 00:03:24, GET, /admin/default/todolist.load, HTTP/1.1, 200, 0.055502
+127.0.0.1, 2017-05-29 00:03:24, GET, /control_inventario_dw/appadmin/hooks, HTTP/1.1, 200, 0.241008
+127.0.0.1, 2017-05-29 00:04:24, GET, /admin/default/todolist.load, HTTP/1.1, 200, 0.085134
+127.0.0.1, 2017-05-29 00:04:24, GET, /control_inventario_dw/appadmin/hooks, HTTP/1.1, 200, 0.313682
+127.0.0.1, 2017-05-29 00:05:24, GET, /admin/default/todolist.load, HTTP/1.1, 200, 0.058329
+127.0.0.1, 2017-05-29 00:05:24, GET, /control_inventario_dw/appadmin/hooks, HTTP/1.1, 200, 0.277030
