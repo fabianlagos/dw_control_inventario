@@ -143,6 +143,7 @@
 'Design': 'Design',
 'Design for': 'Diseño por',
 'detecting': 'detectando',
+'Devoluciones Pendiente': 'Devoluciones Pendiente',
 'Devolver producto': 'Devolver producto',
 'DISK': 'DISCO',
 'Disk Cache Keys': 'Llaves de Caché en Disco',

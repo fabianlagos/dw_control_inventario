@@ -18,5 +18,5 @@ def agregarainventario():
                      #**db.inventario._filter_fields(form.vars))
             #db.inventario.insert(id_producto=idproducto,**(form.vars))
             cantidad=cantidad-1
-        redirect(URL("default", "inventario"))
+        redirect(URL("gestion_inventario", "inventario"))
     return dict(form=form)

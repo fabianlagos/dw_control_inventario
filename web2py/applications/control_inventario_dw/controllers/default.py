@@ -72,7 +72,9 @@ def devolver_productos():
 
     return dict()
 
+def devolucion_pendiente():
 
+    return dict()
 
 
 def agregarainventario():
