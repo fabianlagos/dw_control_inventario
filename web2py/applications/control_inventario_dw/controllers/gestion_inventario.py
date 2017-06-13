@@ -1,3 +1,22 @@
+#Funcion que prestar productos en el inventario
+def PrestarInventario(id_producto_solicitado, id_user):
+    from datetime import datetime
+
+    try:
+        #Insertar la transaccion en prestaciones(registro)
+        db.prestacion.insert( id_user = id_user,
+                            id_inventario = id_producto_solicitado,
+                            fecha_prestacion = datetime.now().strftime('%Y-%m-%d_%H:%M:%S'))
+
+        #Cambiar el estado a no disponible del producto en el inventario
+        db(db.inventario.id == id_producto_solicitado).update(disponible = False)
+
+    except:
+         return "Hubo un error, comunicate con el administrador"
+
+    return "Tu producto ha sido prestado correctamente"
+
+
 def inventario():
 
     estado = (db.inventario.disponible == True)
@@ -8,12 +27,16 @@ def inventario():
     return dict(grid=grid)
 
 def solicitar_producto():
+
+    import inventario
     #retrieve value
     id_producto_solicitado = request.vars['id']
 
     print id_producto_solicitado
 
-    db(db.inventario.id == id_producto_solicitado).update(disponible = False)
+    response.flash = PrestarInventario(id_producto_solicitado, auth.user.id)
+
+    #db(db.inventario.id == id_producto_solicitado).update(disponible = False)
 
     #aquí van los insert a prestaciones
 
