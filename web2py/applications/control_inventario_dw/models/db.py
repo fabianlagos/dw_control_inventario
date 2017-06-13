@@ -137,6 +137,19 @@ db.define_table('prestacion',
                 Field('fecha_devolucion', 'datetime'),
                 Field('devolucion_pendiente', 'boolean', default=False))
 
+db.define_table('logs_inventario',
+                Field('id_user', db.auth_user),
+                Field('id_inventario', db.inventario),
+                Field('fecha', 'datetime'),
+                Field('descripcion'))
+
+db.define_table('logs_producto',
+                Field('id_user', db.auth_user),
+                Field('id_producto', db.producto),
+                Field('fecha', 'datetime'),
+                Field('descripcion'))
+
+
 if (db(db.auth_group).isempty()):
     auth.add_group('admin', 'admin')
     auth.add_group('supervisor', 'supervisor')
