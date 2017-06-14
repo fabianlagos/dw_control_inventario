@@ -17,7 +17,6 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Hello World")
     return dict(message=T('Bienvenido al Inventario de ITsec'))
 
 
@@ -63,7 +62,7 @@ def productos():
     #Esto es un SELECT * FROM db.producto
     consulta = db.producto
 
-    grid = SQLFORM.grid(consulta, csv=False)
+    grid = SQLFORM.grid(consulta, csv=False, links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.id]), _class="btn btn-info glyphicon glyphicon-signal")])
 
     return dict(grid=grid)
 
@@ -72,29 +71,21 @@ def devolver_productos():
 
     return dict()
 
+def devolucion_pendiente():
 
-def inventario():
-
-    estado = (db.inventario.disponible == True)
-
-    links = [lambda row: A('Solicitar',_href=URL("default","inventario",args=[row.id]), _class='button')]
-
-    grid = SQLFORM.grid(estado, links=links, csv=False)
+    return dict()
 
 
-    return dict(grid=grid)
-
-#Esta funcion la pueden ver el Administrador y Supervisor
-def productos_prestados():
-
-<<<<<<< HEAD
-    prestado = (db.inventario.disponible != True)
-
-    grid = SQLFORM.grid(prestado, csv=False)
-=======
-    query = (db.inventario.disponible == False)
-
-    grid = SQLFORM.grid(query)
->>>>>>> develop
-
-    return dict(grid=grid)
+def agregarainventario():
+    form = SQLFORM(db.inventario, fields=['n_serie', 'descripcion', 'disponible'])
+    idproducto=request.args[0]
+    cantidad=1
+    if form.validate():
+        while cantidad>0:
+            #db.inventario.insert(id_producto='idproducto',n_serie="f", descripcion="x", disponible= "true")
+            db.inventario.insert(id_producto=idproducto, n_serie=form.vars.n_serie, descripcion=form.vars.descripcion, disponible=form.vars.disponible)
+                     #**db.inventario._filter_fields(form.vars))
+            #db.inventario.insert(id_producto=idproducto,**(form.vars))
+            cantidad=cantidad-1
+        redirect(URL("default", "inventario"))
+    return dict(form=form)

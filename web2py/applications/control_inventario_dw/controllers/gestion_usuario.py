@@ -4,7 +4,7 @@ def lista_usuarios():
     query = ((db.auth_membership.group_id >= auth.id_group('supervisor')) & (db.auth_user.id == db.auth_membership.user_id) & (db.auth_group.id == db.auth_membership.group_id))
     fields = [db.auth_user.first_name, db.auth_user.last_name, db.auth_user.username, db.auth_user.email, db.auth_group.role]
     db.auth_user.id.writable = False
-    links = [lambda row: A(' Cambiar Privilegio', callback=URL('gestion_usuario', 'cambiar_privilegios', vars={ 'id' : row.auth_user.id }), target='callback-lista_usuarios', _class='btn btn-info glyphicon glyphicon-eye-open' ,_onclick="return confirm('Estas seguro que desea cambiar privilegios?');")]
+    links = [lambda row: A(' Cambiar Privilegio', callback=URL('gestion_usuario', 'cambiar_privilegios', vars={ 'id' : row.auth_user.id }), target='callback-lista_usuarios', _class='btn btn-default glyphicon glyphicon-eye-open' ,_onclick="return confirm('Estas seguro que desea cambiar privilegios?');")]
     grid = SQLFORM.grid(query, create=False, details=False, csv=False, fields=fields, links=links)
 
     #grid = SQLFORM.grid(query, create=False, details=False)
@@ -38,7 +38,7 @@ def cambiar_privilegios():
     query = ((db.auth_membership.group_id >= auth.id_group('supervisor')) & (db.auth_user.id == db.auth_membership.user_id) & (db.auth_group.id == db.auth_membership.group_id))
     fields = [db.auth_user.first_name, db.auth_user.last_name, db.auth_user.username, db.auth_user.email, db.auth_group.role]
     db.auth_user.id.writable = False
-    links = [lambda row: A(' Cambiar Privilegio', callback=URL('gestion_usuario', 'cambiar_privilegios', vars={ 'id' : row.auth_user.id }), target='callback-lista_usuarios', _class='btn btn-info glyphicon glyphicon-eye-open',_onclick="return confirm('Estas seguro que desea cambiar privilegios?');")]
+    links = [lambda row: A(' Cambiar Privilegio', callback=URL('gestion_usuario', 'cambiar_privilegios', vars={ 'id' : row.auth_user.id }), target='callback-lista_usuarios', _class='btn btn-default glyphicon glyphicon-eye-open',_onclick="return confirm('Estas seguro que desea cambiar privilegios?');")]
 
     grid = SQLFORM.grid(query, create=False, details=False, csv=False, fields=fields, links=links)
 
