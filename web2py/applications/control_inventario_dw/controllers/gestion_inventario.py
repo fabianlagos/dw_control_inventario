@@ -18,7 +18,7 @@ def PrestarInventario(id_producto_solicitado, id_user):
 
     return "Tu producto ha sido prestado correctamente"
 
-#Funcion que prestar productos en el inventario
+#Funcion que presta productos en el inventario
 def DevolverInventario(id_producto_solicitado, id_user):
     from datetime import datetime
 
@@ -35,67 +35,119 @@ def DevolverInventario(id_producto_solicitado, id_user):
 
     return "Tu producto ha sido devuelto correctamente"
 
+#Esta es la vista Inventario
 def inventario():
 
-    estado = (db.inventario.disponible == True)
+    #SELECT producto.nombre, inventario.n_serie, inventario.descripcion FROM producto, inventario
+        #WHERE producto.id = inventario.id_producto AND inventario.disponible = True
+
+    #Falta agregar la categoria a los campos, para mostrarlos en la vista
+    consulta = ( db.inventario.id_producto == db.producto.id ) & (db.inventario.disponible == True)
+    campos = [db.inventario.id,
+              db.producto.nombre,
+              db.inventario.n_serie,
+              db.inventario.descripcion,
+              db.producto.marca,
+              db.producto.modelo]
+
+    db.inventario.id.readable = False
 
     links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto',
-    vars={'id' : row.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
-    grid = SQLFORM.grid(estado, details=False, csv=False, links=links)
+    vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+
+    #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
+    grid = SQLFORM.grid(consulta, fields=campos, details=False, csv=False, links=links)
 
     return dict(grid=grid)
 
+#ajax para solicitar producto (botón)
 def solicitar_producto():
 
     import inventario
-    #retrieve value
+    #Retrieve value
     id_producto_solicitado = request.vars['id']
 
-    print id_producto_solicitado
-
+    #db(db.inventario.id == id_producto_solicitado).update(disponible = False)
     response.flash = PrestarInventario(id_producto_solicitado, auth.user.id)
 
-    #db(db.inventario.id == id_producto_solicitado).update(disponible = False)
+    #¿aquí van los insert a prestaciones?
 
-    #aquí van los insert a prestaciones
+    consulta = ( db.inventario.id_producto == db.producto.id ) & (db.inventario.disponible == True)
+    campos = [db.inventario.id,
+              db.producto.nombre,
+              db.inventario.n_serie,
+              db.inventario.descripcion,
+              db.producto.marca,
+              db.producto.modelo]
 
-    estado = (db.inventario.disponible == True)
+    db.inventario.id.readable = False
 
-    links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto', vars={'id' : row.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+    links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto',
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
 
-    grid = SQLFORM.grid(estado, details=False, csv=False, links=links)
+    grid = SQLFORM.grid(consulta, fields=campos, details=False, csv=False, links=links)
 
     return grid
 
-#Esta funcion la pueden ver el Administrador y Supervisor
-def productos_prestados():
+#Esta funcion la pueden ver el Supervisor y usuarios
+def devolver_productos():
 
     prestado = (db.inventario.disponible == False)
 
-    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver_producto', vars={'id' : row.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
 
-    grid = SQLFORM.grid(prestado, details=False, csv=False, links=links)
+    #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
+    grid = SQLFORM.grid(consulta, fields=campos, details=False, csv=False, links=links)
 
     return dict(grid=grid)
 
-def devolver_producto():
+#Ajax de la vista devolver productos
+def devolver():
 
     import inventario
 
     #retrieve value
     id_producto_solicitado = request.vars['id']
-
-    print id_producto_solicitado
 
     #db(db.inventario.id == id_producto_solicitado).update(disponible = True)
     response.flash = DevolverInventario(id_producto_solicitado, auth.user.id)
 
     #aquí van los insert a prestaciones
 
-    prestado = (db.inventario.disponible == False)
+    consulta = ( db.inventario.id_producto == db.producto.id ) & (db.inventario.disponible == False)
+    campos = [db.inventario.id,
+              db.producto.nombre,
+              db.inventario.n_serie,
+              db.inventario.descripcion,
+              db.producto.marca,
+              db.producto.modelo ]
 
-    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver_producto', vars={'id' : row.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+    db.inventario.id.readable = False
 
-    grid = SQLFORM.grid(prestado, details=False, csv=False, links=links)
+    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+
+    grid = SQLFORM.grid(consulta, fields=campos, details=False, csv=False, links=links)
 
     return grid
+
+#Vista de productos prestados (Administrador y Supervisor pueden ver esto)
+def productos_prestados():
+
+    consulta = ( db.inventario.id_producto == db.producto.id ) & (db.inventario.disponible == False)
+    campos = [db.inventario.id,
+              db.producto.nombre,
+              db.inventario.n_serie,
+              db.inventario.descripcion,
+              db.producto.marca,
+              db.producto.modelo ]
+
+    db.inventario.id.readable = False
+
+    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+
+    #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
+    grid = SQLFORM.grid(consulta, fields=campos, details=False, csv=False, links=links)
+    return dict(grid=grid)
