@@ -54,7 +54,12 @@ def _():
             (T('Productos'), False, URL('gestion_productos', 'productos')),
             (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados')),
             (T('Gestion de usuarios'), False, URL('gestion_usuario','lista_usuarios')),
-            (T('Devoluciones Pendiente'), False, URL('default','devolucion_pendiente'))
+            (T('Devoluciones Pendiente'), False, URL('default','devolucion_pendiente')),
+            (T('Estadisticas y Registros'), False, '#', [
+                (T('Estadisticas'), False, URL('estadisticas','estadisticas')),
+                (T('Registros Inventario'), False, URL('logs','registros_inventario')),
+                (T('Registros Productos'), False, URL('logs','registros_productos')),
+            ])
 
 
         ]
