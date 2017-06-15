@@ -75,6 +75,7 @@ div.error { background-color: red; color: white; padding: 3px; }
 
  </head>
  <body>
+   <div class="w2p_flash alert alert-dismissable">{{=response.flash or ''}}</div>
   <!-- start header -->
   {{try:}}{{=auth.navbar(action=URL('default','user'))}}{{except:pass}}
 
@@ -82,9 +83,9 @@ div.error { background-color: red; color: white; padding: 3px; }
   <div id="logo">
 
    <h1>
-     <img src="/control_inventario_dw/static/images/logo_itsec2.png" alt="Mi Logo" >
+     <img src="/control_inventario_dw/static/images/logo_itsec2.png" alt="Logo ITsec" style=" margin: 30px 30px; margin-top: -1.3cm;  width: 250px; height: 30%" />
 
-    Control de Inventario
+    Control Inventario
    </h1>
    <h2>
     {{=response.subtitle }}
@@ -101,7 +102,7 @@ div.error { background-color: red; color: white; padding: 3px; }
   <div id="page">
    <!-- start content -->
    <div>
-    <div class="flash">{{=response.flash or ''}}</div>
+
     {{include}}
    </div>
    <!-- end content -->
