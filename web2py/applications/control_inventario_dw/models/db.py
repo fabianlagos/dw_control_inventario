@@ -135,8 +135,7 @@ db.define_table('prestacion',
                 Field('id_inventario', db.inventario),
                 Field('fecha_prestacion', 'datetime'),
                 Field('fecha_devolucion', 'datetime'),
-                Field('devolucion_pendiente', 'boolean', default=True), #Prestado pero aun sin devolver
-                Field('aprobacion_pendiente', 'boolean', default=True)) #Devuelto pero sin aprobación
+                Field('devolucion_pendiente', 'boolean', default=False)) #Prestado pero aun sin aprobacion
 
 db.define_table('logs_inventario',
                 Field('id_user', db.auth_user),
