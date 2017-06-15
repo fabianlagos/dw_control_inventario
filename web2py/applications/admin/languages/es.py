@@ -367,6 +367,7 @@
 'shell': 'shell',
 'Site': 'sitio',
 'some files could not be removed': 'algunos archivos no pudieron ser removidos',
+'Sorry, could not find mercurial installed': 'Sorry, could not find mercurial installed',
 'source : filesystem': 'fuente : sistema de archivos',
 'Start searching': 'Iniciar búsqueda',
 'Start wizard': 'Iniciar asistente',
