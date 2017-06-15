@@ -135,12 +135,7 @@ db.define_table('prestacion',
                 Field('id_inventario', db.inventario),
                 Field('fecha_prestacion', 'datetime'),
                 Field('fecha_devolucion', 'datetime'),
-<<<<<<< HEAD
-                Field('devolucion_pendiente', 'boolean', default=False),
-                Field('aprobacion_pendiente', 'boolean', default=False))
-=======
                 Field('devolucion_pendiente', 'boolean', default=False)) #Prestado pero aun sin aprobacion
->>>>>>> develop
 
 db.define_table('logs_inventario',
                 Field('id_user', db.auth_user),
