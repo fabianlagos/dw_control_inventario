@@ -11,11 +11,11 @@ def productos():
 
 def agregarainventario():
 
-    form1 = SQLFORM(db.inventario, db.categoria, fields=['n_serie', 'descripcion', 'disponible'])
+    form = SQLFORM(db.inventario, fields=['n_serie', 'descripcion', 'disponible'])
     form2 = SQLFORM(db.categoria, fields=['nombre'])
     idproducto=request.args[0]
     cantidad=1
-    if form1.validate():
+    if form.validate():
         while cantidad>0:
             #db.inventario.insert(id_producto='idproducto',n_serie="f", descripcion="x", disponible= "true")
             db.inventario.insert(id_producto=idproducto, n_serie=form.vars.n_serie, descripcion=form.vars.descripcion, disponible=form.vars.disponible)
@@ -23,7 +23,7 @@ def agregarainventario():
             #db.inventario.insert(id_producto=idproducto,**(form.vars))
             cantidad=cantidad-1
         redirect(URL("gestion_inventario", "inventario"))
-    return dict(form1=form1, form2=form2)
+    return dict(form=form, form2=form2)
 
 def crear_producto():
 

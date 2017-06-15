@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : FronzenAge
+Description: A two-column, fixed-width template suitable for business sites and blogs.
+Version    : 1.0
+Released   : 20071108
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>
+   {{=response.title or request.application}}
+  </title>
+  {{response.files.append(URL(request.application,'static','plugin_layouts/layouts/Frozenage/style.css'))}}
+  {{response.files.append(URL('static','plugin_layouts/superfish.js'))}}
+  {{include 'web2py_ajax.html'}}
+  <style>
+ul.web2py-menu-vertical { width: 150px; position: relative; top:1em; left:1em;  z-index:30; border:0; margin:0; padding: 0; list-style: none; text-decoration: none;}
+ul.web2py-menu-vertical li { margin:0; padding:0; border:0; width: 150px; background: black; text-align:left;}
+ul.web2py-menu-vertical li a { margin:0; padding: 1px 3px 1px 3px; border:0; width: 144px; color: white; font-size:12px;}
+div.flash { position: fixed; float: right; padding: 10px; top: 10px; right: 30px; opacity: 0.75; margin: 10px 10px 10px 10px; text-align: center; clear: both; color: #fff; font-size: 11pt; text-align: center; vertical-align: middle; cursor: pointer; background: black; border: 2px solid #fff; -moz-border-radius: 5px; -webkit-border-radius: 5px; z-index: 2; }
+div.error { background-color: red; color: white; padding: 3px; }
+.auth_navbar { text-align:right; z-index:20; position: absolute; top: 2px; right:30px; border:0; padding:0 }
+  </style>
+ </head>
+ <body>
+  <!-- start header -->
+  {{try:}}{{=auth.navbar(action=URL('default','user'))}}{{except:pass}}
+
+  <div id="logo">
+   <h1>
+    {{=response.title or request.application}}
+   </h1>
+   <h2>
+    {{=response.subtitle or '=response.subtitle'}}
+   </h2>
+  </div>
+  <div id="menu">
+   {{=MENU(response.menu,_class='web2py-menu')}}
+    <script>
+      jQuery(document).ready(function(){jQuery('ul.web2py-menu').superfish({delay:400});});
+    </script>
+  </div>
+  <hr />
+  <div id="banner">
+   <img src="images/img04.jpg" alt="" width="960" height="147" />
+  </div>
+  <!-- start page -->
+  <div id="page">
+   <!-- start content -->
+   <div id="content">
+    <div class="flash">{{=response.flash or ''}}</div>
+    {{include}}
+   </div>
+   <!-- end content -->
+   <!-- start sidebar -->
+   <div id="sidebar">
+    <ul>
+     <li id="calendar">
+      <table summary="Calendar">
+       <caption>
+        November 2007
+       </caption>
+       <thead>
+        <tr>
+         <th abbr="Monday" scope="col" title="Monday">
+          M
+         </th>
+         <th abbr="Tuesday" scope="col" title="Tuesday">
+          T
+         </th>
+         <th abbr="Wednesday" scope="col" title="Wednesday">
+          W
+         </th>
+         <th abbr="Thursday" scope="col" title="Thursday">
+          T
+         </th>
+         <th abbr="Friday" scope="col" title="Friday">
+          F
+         </th>
+         <th abbr="Saturday" scope="col" title="Saturday">
+          S
+         </th>
+         <th abbr="Sunday" scope="col" title="Sunday">
+          S
+         </th>
+        </tr>
+       </thead>
+       <tfoot>
+        <tr>
+         <td abbr="October" colspan="3" id="prev">
+          <a href="http://wordpress.local/?m=200710" title="View posts for October 2007">
+           &laquo; Oct
+          </a>
+         </td>
+         <td class="pad">
+          &nbsp;
+         </td>
+         <td abbr="December" colspan="3" id="next">
+          <a href="http://wordpress.local/?m=200710" title="View posts for December 2007">
+           Dec &raquo;
+          </a>
+         </td>
+        </tr>
+       </tfoot>
+       <tbody>
+        <tr>
+         <td colspan="3" class="pad">
+          &nbsp;
+         </td>
+         <td>
+          1
+         </td>
+         <td>
+          2
+         </td>
+         <td>
+          3
+         </td>
+         <td>
+          4
+         </td>
+        </tr>
+        <tr>
+         <td id="today">
+          5
+         </td>
+         <td>
+          6
+         </td>
+         <td>
+          7
+         </td>
+         <td>
+          8
+         </td>
+         <td>
+          9
+         </td>
+         <td>
+          10
+         </td>
+         <td>
+          11
+         </td>
+        </tr>
+        <tr>
+         <td>
+          12
+         </td>
+         <td>
+          13
+         </td>
+         <td>
+          14
+         </td>
+         <td>
+          15
+         </td>
+         <td>
+          16
+         </td>
+         <td>
+          17
+         </td>
+         <td>
+          18
+         </td>
+        </tr>
+        <tr>
+         <td>
+          19
+         </td>
+         <td>
+          20
+         </td>
+         <td>
+          21
+         </td>
+         <td>
+          22
+         </td>
+         <td>
+          23
+         </td>
+         <td>
+          24
+         </td>
+         <td>
+          25
+         </td>
+        </tr>
+        <tr>
+         <td>
+          26
+         </td>
+         <td>
+          27
+         </td>
+         <td>
+          28
+         </td>
+         <td>
+          29
+         </td>
+         <td>
+          30
+         </td>
+         <td class="pad" colspan="2">
+          &nbsp;
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </li>
+     <li>
+      <h2>
+       Etiam dolore
+      </h2>
+      <p>
+       Nulla pellentesque dolor non tellus. Duis vel elit sit
+       <a href="#">
+        amet ipsum vehicula
+       </a>
+       varius. Vestibulum ante ipsum primis in faucibus orci luctus.
+      </p>
+     </li>
+     <li>
+      <h2>
+       Consequat lorem
+      </h2>
+      <ul>
+       <li>
+        <a href="#">
+         Proin nec magna nec massa
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Sit amet purus congue
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Molestie aliquam erat volutpat
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Nulla pellentesque dolor
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Non tellus duis vel elit sit
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Amet ipsum vehicula varius
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Primis in faucibus orci luctus
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Vestibulum ante ipsum
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </div>
+   <!-- end sidebar -->
+  </div>
+  <!-- end page -->
+  <div id="footer">
+   <p class="legal">
+    Copyright (c) 2007 Website Name. All rights reserved.
+   </p>
+   <p class="credit">
+    Designed by
+    <a href="http://www.nodethirtythree.com/">
+     NodeThirtyThree
+    </a>
+    +
+    <a href="http://www.freecsstemplates.org/">
+     Free CSS Templates
+    </a>
+   </p>
+  </div>
+ </body>
+</html>
