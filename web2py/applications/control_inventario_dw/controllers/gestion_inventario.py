@@ -68,7 +68,7 @@ def inventario():
     db.inventario.id.readable = False
 
     links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto',
-    vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+    vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-plus")]
 
     #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
     grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
@@ -99,7 +99,7 @@ def solicitar_producto():
     db.inventario.id.readable = False
 
     links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-plus")]
 
     grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
 
@@ -121,6 +121,7 @@ def devolver_productos():
 
     consulta = ((db.inventario.id_producto == db.producto.id)
               & (db.auth_user.id == db.prestacion.id_user)
+              & (db.prestacion.fecha_devolucion == None)
               & (db.prestacion.devolucion_pendiente == False)
               & (db.inventario.disponible == False))
 
@@ -135,7 +136,7 @@ def devolver_productos():
     db.inventario.id.readable = False
 
     links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-minus")]
 
     #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
     grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
@@ -157,6 +158,7 @@ def devolver():
 
     consulta = ((db.inventario.id_producto == db.producto.id)
               & (db.auth_user.id == db.prestacion.id_user)
+              & (db.prestacion.fecha_devolucion == None)
               & (db.prestacion.devolucion_pendiente == False)
               & (db.inventario.disponible == False))
 
@@ -171,7 +173,7 @@ def devolver():
     db.inventario.id.readable = False
 
     links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-minus")]
 
     grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
 
@@ -182,6 +184,7 @@ def productos_prestados():
 
     consulta = ((db.inventario.id_producto == db.producto.id)
               & (db.auth_user.id == db.prestacion.id_user)
+              & (db.prestacion.fecha_devolucion == None)
               & (db.prestacion.devolucion_pendiente == False)
               & (db.inventario.disponible == False))
 
@@ -196,7 +199,7 @@ def productos_prestados():
     db.inventario.id.readable = False
 
     links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-minus")]
 
     #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
     grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
@@ -210,7 +213,7 @@ def devolucion_pendiente():
                 & (db.prestacion.devolucion_pendiente == True))
 
     links = [lambda row: A('Aprobacion', callback=URL('gestion_inventario', 'aprobacion',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-ok-sign")]
 
     campos = [db.inventario.id,
               db.producto.nombre,
