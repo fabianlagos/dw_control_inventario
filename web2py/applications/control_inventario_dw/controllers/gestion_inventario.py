@@ -209,11 +209,12 @@ def devolucion_pendiente():
 
     consulta = ((db.prestacion.id_inventario == db.inventario.id)
                 & (db.inventario.id_producto == db.producto.id)
+                & (db.auth_user.id == db.prestacion.id_user)
                 & (db.inventario.disponible == False)
                 & (db.prestacion.devolucion_pendiente == True))
 
     links = [lambda row: A('Aprobacion', callback=URL('gestion_inventario', 'aprobacion',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-ok-sign")]
+             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
 
     campos = [db.inventario.id,
               db.producto.nombre,
