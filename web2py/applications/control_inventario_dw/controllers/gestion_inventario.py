@@ -80,7 +80,7 @@ def inventario():
     db.inventario.id.readable = False
 
     links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto',
-    vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-plus")]
+    vars={'id' : row.inventario.id }), _onclick="confirm('Estas seguro que deseas pedir este producto?')", target='t', _class="btn btn-default glyphicon glyphicon-plus")]
 
     #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
     grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
