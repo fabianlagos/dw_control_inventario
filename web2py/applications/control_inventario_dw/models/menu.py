@@ -55,7 +55,7 @@ def _():
             (T('Inventario'), False, '#', [
                 (T('Inventario'), False, URL('gestion_inventario', 'inventario')),
                 (T('Catalogo Productos'), False, URL('gestion_productos', 'productos')),
-                (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados')),
+                 (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados')),
                 (T('Devoluciones Pendientes'), False, URL('gestion_inventario','devolucion_pendiente')),
                 (T('Gestion categorias'), False, URL('gestion_categorias','categorias'))
 
@@ -70,15 +70,30 @@ def _():
         ]
     if auth.has_membership(2):
         response.menu += [
-            (T('Inventario'), False, URL('gestion_inventario','inventario')),
-            (T('Devolver producto'), False, URL('default','devolver_productos')),
-            (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados')),
 
+            (T('Inventario'), False, '#', [
+                (T('Inventario'), False, URL('gestion_inventario', 'inventario')),
+                (T('Devolver producto'), False, URL('gestion_inventario','devolver_productos')),
+                (T('Catalogo Productos'), False, URL('gestion_productos', 'productos')),
+                 (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados'))
+            ]),
+            (T('Estadisticas y Registros'), False, '#', [
+                (T('Estadisticas'), False, URL('estadisticas','estadisticas')),
+                (T('Registros Inventario'), False, URL('logs','registros_inventario')),
+                (T('Registros Productos'), False, URL('logs','registros_productos'))
+            ])
         ]
     if auth.has_membership(3):
         response.menu += [
-            (T('Inventario'), False, URL('gestion_inventario','inventario')),
-            (T('Productos prestados'), False, URL('gestion_inventario','productos_prestados')),
+
+            (T('Inventario'), False, '#', [
+                (T('Inventario'), False, URL('gestion_inventario', 'inventario')),
+                (T('Devolver producto'), False, URL('gestion_inventario','devolver_productos')),
+                (T('Catalogo Productos'), False, URL('gestion_productos', 'productos'))
+            ]),
+            (T('Estadisticas y Registros'), False, '#', [
+                (T('Estadisticas'), False, URL('estadisticas','estadisticas'))
+            ])
         ]
 
 
