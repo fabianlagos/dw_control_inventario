@@ -2,11 +2,13 @@
 def PrestarInventario(id_producto_solicitado, id_user):
     from datetime import datetime
 
+    fecha_actual = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+
     try:
         #Insertar la transaccion en prestaciones(registro)
         db.prestacion.insert( id_user = id_user,
                             id_inventario = id_producto_solicitado,
-                            fecha_prestacion = datetime.now().strftime('%Y-%m-%d_%H:%M:%S'),
+                            fecha_prestacion = fecha_actual,
                             devolucion_pendiente = False)
 
         #Cambiar el estado a no disponible del producto en el inventario
@@ -14,12 +16,16 @@ def PrestarInventario(id_producto_solicitado, id_user):
 
 
     except:
+         db.logs_inventario.insert(id_user=id_user, id_inventario=id_producto_solicitado, fecha=fecha_actual, descripcion="Error: No se puedo registrar el producto prestado")
          return "Hubo un error, comunicate con el administrador"
 
+    db.logs_inventario.insert(id_user=id_user, id_inventario=id_producto_solicitado, fecha=fecha_actual, descripcion="Se registra el producto prestado")
     return "Tu producto ha sido prestado correctamente"
 
 #Funcion que presta productos en el inventario
 def DevolverInventario(id_producto_solicitado, id_user):
+    from datetime import datetime
+    fecha_actual = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
     try:
         #Cambia el estado a devolucion_pendiente en prestacion. estado = True
         db((db.prestacion.id_inventario == id_producto_solicitado) & (db.prestacion.fecha_devolucion == None)).update(devolucion_pendiente = True)
@@ -28,12 +34,16 @@ def DevolverInventario(id_producto_solicitado, id_user):
         db(db.inventario.id == id_producto_solicitado).update(disponible = False)
 
     except:
+         db.logs_inventario.insert(id_user=id_user, id_inventario=id_producto_solicitado, fecha=fecha_actual, descripcion="Error: Producto no devuelto")
          return "Hubo un error, comunicate con el administrador."
 
+    db.logs_inventario.insert(id_user=id_user, id_inventario=id_producto_solicitado, fecha=fecha_actual, descripcion="Producto devuelto, esperado aprobacion")
     return "Tu producto ha sido devuelto correctamente y queda a la espera de aprobación de un administrador."
 
-def AprobarInventario(id_prestacion):
+def AprobarInventario(id_prestacion, id_producto_solicitado, id_user):
     from datetime import datetime
+    fecha_actual = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+
 
     try:
         #Cambia el estado del producto en prestaciones a Falso, con lo que se cumplen las condiciones de
@@ -45,8 +55,10 @@ def AprobarInventario(id_prestacion):
         db(db.inventario.id == id_prestacion).update(disponible = True)
 
     except:
+        db.logs_inventario.insert(id_user=id_user, id_inventario=id_producto_solicitado, fecha=fecha_actual, descripcion="Error: Devolucion fallida")
         return "Hubo un error, comunicate con el administrador."
 
+    db.logs_inventario.insert(id_user=id_user, id_inventario=id_producto_solicitado, fecha=fecha_actual, descripcion="Devolucion aprobada, producto añadido al inventario")
     return "El producto ha sido devuelto al inventario correctamente."
 
 #Esta es la vista Inventario
@@ -234,8 +246,10 @@ def aprobacion():
 
     id_prestacion_solicitada = request.vars['id']
 
+    id_producto_solicitado = db(db.prestacion.id == id_prestacion_solicitada).select(db.prestacion.id_inventario)[0].get('id_inventario')
+
     #db(db.inventario.id == id_producto_solicitado).update(disponible = True)
-    response.flash = AprobarInventario(id_prestacion_solicitada)
+    response.flash = AprobarInventario(id_prestacion_solicitada, id_producto_solicitado, auth.user.id)
 
     consulta = ((db.prestacion.id_inventario == db.inventario.id)
                 & (db.inventario.id_producto == db.producto.id)

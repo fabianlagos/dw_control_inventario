@@ -51,6 +51,7 @@ def _():
     if auth.has_membership(1):
         response.menu += [
 
+
             (T('Inventario'), False, '#', [
                 (T('Inventario'), False, URL('gestion_inventario', 'inventario')),
                 (T('Catalogo Productos'), False, URL('gestion_productos', 'productos')),
@@ -59,7 +60,12 @@ def _():
                 (T('Gestion categorias'), False, URL('gestion_categorias','categorias'))
 
             ]),
-            (T('Gestion de usuarios'), False, URL('gestion_usuario','lista_usuarios'))
+            (T('Gestion de usuarios'), False, URL('gestion_usuario','lista_usuarios')),
+            (T('Estadisticas y Registros'), False, '#', [
+                (T('Estadisticas'), False, URL('estadisticas','estadisticas')),
+                (T('Registros Inventario'), False, URL('logs','registros_inventario')),
+                (T('Registros Productos'), False, URL('logs','registros_productos')),
+            ])
 
         ]
     if auth.has_membership(2):
