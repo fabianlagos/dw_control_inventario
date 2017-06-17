@@ -1,8 +1,52 @@
 {{extend 'layout.html'}}
-<h1> En construcción... </h1>
+
+<h1> Estadísticas </h1>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#1">Estadisticas Globales </a></li>
+  <li><a data-toggle="tab" href="#2">Productos más pedidos</a></li>
+  <li><a data-toggle="tab" href="#3">Usuario con más prestaciones</a></li>
+
+</ul>
+
+<div class="tab-content">
+
+  <div id="1" class="tab-pane fade active in">
+    <h2>Estadisticas Globales</h2>
+    <br>
+
+    <ul class="list-group">
+  <li class="list-group-item">Total usuarios en el sistema (Actualmente)<span class="badge">{{=TotalUsuarios}}</span></li>
+  <li class="list-group-item">Total de productos en el catalogo (Actualmente)<span class="badge">{{=TotalProductos}}</span></li>
+  <li class="list-group-item">Total de productos disponibles en el inventario (Actualmente)<span class="badge">{{=TotalInventarioDisponibles}}</span></li>
+  <li class="list-group-item">Total de productos prestados (Actualmente) <span class="badge">{{=TotalInventarioPrestado}}</span></li>
+  <li class="list-group-item">Total de prestaciones (Histórico)<span class="badge">{{=TotalPrestaciones}}</span></li>
+  <li class="list-group-item">Total de devoluciones (Histórico) <span class="badge">{{=TotalDevoluciones}}</span></li>
+  </ul>
 
 
-<figure>
-  <embed style='width:80%;' type="image/svg+xml" src="{{=ProductosMasPedidos}}" />
+    <br> <br>
 
-</figure>
+  </div>
+  <div id="2" class="tab-pane fade">
+    <h3>Productos más pedidos</h3>
+    <figure>
+      <embed style='width:80%;' type="image/svg+xml" src="{{=ProductosMasPedidos}}" />
+
+    </figure>
+
+
+
+  </div>
+
+  <div id="3" class="tab-pane fade">
+    <h3>Usuario con más prestaciones</h3>
+    <figure>
+      <embed style='width:80%;' type="image/svg+xml" src="{{=UsuariosMasPrestaciones}}" />
+
+    </figure>
+
+
+  </div>
+
+</div>
