@@ -127,7 +127,7 @@ db.define_table('categoria',
                 Field('descripcion', 'string'))
 
 db.define_table('categoria_producto',
-                Field('id_producto', db.producto),
+                Field('id_producto', db.producto, unique=True),
                 Field('id_categoria', db.categoria))
 
 db.define_table('prestacion',
@@ -138,14 +138,18 @@ db.define_table('prestacion',
                 Field('devolucion_pendiente', 'boolean', default=False)) #Prestado pero aun sin aprobacion
 
 db.define_table('logs_inventario',
-                Field('id_user', db.auth_user),
-                Field('id_inventario', db.inventario),
+                Field('id_user'),
+                Field('username'),
+                Field('id_inventario'),
+                Field('nombre_producto', 'string'),
                 Field('fecha', 'datetime'),
                 Field('descripcion'))
 
 db.define_table('logs_producto',
-                Field('id_user', db.auth_user),
-                Field('id_producto', db.producto),
+                Field('id_user'),
+                Field('username' , 'string'),
+                Field('id_producto'),
+                Field('nombre_producto', 'string'),
                 Field('fecha', 'datetime'),
                 Field('descripcion'))
 

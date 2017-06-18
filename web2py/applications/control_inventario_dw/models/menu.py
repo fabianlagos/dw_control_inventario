@@ -48,7 +48,7 @@ def _():
     # ------------------------------------------------------------------------------------------------------------------
     # useful links to internal and external resources
     # ------------------------------------------------------------------------------------------------------------------
-    if auth.has_membership(1):
+    if auth.has_membership(group_id='admin'):
         response.menu += [
 
 
@@ -68,7 +68,7 @@ def _():
             ])
 
         ]
-    if auth.has_membership(2):
+    if auth.has_membership(group_id='supervisor'):
         response.menu += [
 
             (T('Inventario'), False, '#', [
@@ -83,7 +83,7 @@ def _():
                 (T('Registros Productos'), False, URL('logs','registros_productos'))
             ])
         ]
-    if auth.has_membership(3):
+    if auth.has_membership(group_id='user_basic'):
         response.menu += [
 
             (T('Inventario'), False, '#', [
