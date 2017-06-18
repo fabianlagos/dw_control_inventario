@@ -1,0 +1,132 @@
+timestamp: 2017-06-18T16:30:24.108933
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    username VARCHAR(128),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.146202
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.180470
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.303023
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.371075
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.388597
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.405069
+CREATE TABLE producto(
+    id INT AUTO_INCREMENT NOT NULL,
+    nombre VARCHAR(512),
+    marca VARCHAR(512),
+    modelo VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.432980
+CREATE TABLE inventario(
+    id INT AUTO_INCREMENT NOT NULL,
+    id_producto INT  , INDEX id_producto__idx (id_producto), FOREIGN KEY (id_producto) REFERENCES producto (id) ON DELETE CASCADE,
+    n_serie VARCHAR(512),
+    descripcion VARCHAR(512),
+    disponible CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.477835
+CREATE TABLE categoria(
+    id INT AUTO_INCREMENT NOT NULL,
+    nombre VARCHAR(512),
+    descripcion VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.501409
+CREATE TABLE categoria_producto(
+    id INT AUTO_INCREMENT NOT NULL,
+    id_producto INT   UNIQUE, INDEX id_producto__idx (id_producto), FOREIGN KEY (id_producto) REFERENCES producto (id) ON DELETE CASCADE,
+    id_categoria INT  , INDEX id_categoria__idx (id_categoria), FOREIGN KEY (id_categoria) REFERENCES categoria (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.522620
+CREATE TABLE prestacion(
+    id INT AUTO_INCREMENT NOT NULL,
+    id_user INT  , INDEX id_user__idx (id_user), FOREIGN KEY (id_user) REFERENCES auth_user (id) ON DELETE CASCADE,
+    id_inventario INT  , INDEX id_inventario__idx (id_inventario), FOREIGN KEY (id_inventario) REFERENCES inventario (id) ON DELETE CASCADE,
+    fecha_prestacion DATETIME,
+    fecha_devolucion DATETIME,
+    devolucion_pendiente CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.548295
+CREATE TABLE logs_inventario(
+    id INT AUTO_INCREMENT NOT NULL,
+    id_user VARCHAR(512),
+    username VARCHAR(512),
+    id_inventario VARCHAR(512),
+    nombre_producto VARCHAR(512),
+    fecha DATETIME,
+    descripcion VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-18T16:30:24.563594
+CREATE TABLE logs_producto(
+    id INT AUTO_INCREMENT NOT NULL,
+    id_user VARCHAR(512),
+    username VARCHAR(512),
+    id_producto VARCHAR(512),
+    nombre_producto VARCHAR(512),
+    fecha DATETIME,
+    descripcion VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!

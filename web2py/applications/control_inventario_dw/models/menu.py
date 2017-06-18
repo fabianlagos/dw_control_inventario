@@ -88,8 +88,7 @@ def _():
 
             (T('Inventario'), False, '#', [
                 (T('Inventario'), False, URL('gestion_inventario', 'inventario')),
-                (T('Devolver producto'), False, URL('gestion_inventario','devolver_productos')),
-                (T('Catalogo Productos'), False, URL('gestion_productos', 'productos'))
+                (T('Devolver producto'), False, URL('gestion_inventario','devolver_productos'))
             ]),
             (T('Estadisticas y Registros'), False, '#', [
                 (T('Estadisticas'), False, URL('estadisticas','estadisticas'))

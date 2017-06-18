@@ -72,11 +72,15 @@ def productos():
 
     db.producto.id.readable = False
 
-    links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.id]), _class="btn btn-default glyphicon glyphicon-plus")]
+    if auth.has_membership(group_id='admin'):
+        links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.id]), _class="btn btn-default glyphicon glyphicon-plus")]
 
+        grid = SQLFORM.grid(consulta, create=False, csv=False, ondelete=OnDelete, links=links, details=auth.has_membership('admin'), editable=auth.has_membership('admin'), deletable=auth.has_membership('admin'))
 
+    else:
+        links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.id]), _class="btn btn-default glyphicon glyphicon-plus")]
 
-    grid = SQLFORM.grid(consulta, create=False, csv=False, ondelete=OnDelete, links=links, details=auth.has_membership('admin'), editable=auth.has_membership('admin'), deletable=auth.has_membership('admin'))
+        grid = SQLFORM.grid(consulta, create=False, csv=False, ondelete=OnDelete, details=False, editable=False, deletable=False)
 
     return dict(grid=grid)
 

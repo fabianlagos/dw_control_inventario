@@ -1,6 +1,10 @@
 {{extend 'layout.html'}}
 <h1>Catalogo de productos</h1>
-{{=A(' Crear producto', _href=URL('gestion_productos', 'crear_producto'), _class="btn btn-default glyphicon glyphicon-plus")}}
+
+{{if auth.has_membership(group_id='admin'):}}
+  {{=A(' Crear producto', _href=URL('gestion_productos', 'crear_producto'), _class="btn btn-default glyphicon glyphicon-plus")}}
+
+{{pass}}
 
 {{=grid}}
 

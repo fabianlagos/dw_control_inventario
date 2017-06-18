@@ -13,7 +13,7 @@ p6
 I4
 sS'sql'
 p7
-S'CHAR(512)'
+S'VARCHAR(512)'
 p8
 sS'notnull'
 p9
@@ -32,7 +32,7 @@ I00
 sg6
 I2
 sg7
-S'INTEGER REFERENCES producto (id) ON DELETE CASCADE  '
+S'INT  , INDEX id_producto__idx (id_producto), FOREIGN KEY (id_producto) REFERENCES producto (id) ON DELETE CASCADE'
 p14
 sg9
 I00
@@ -49,7 +49,7 @@ I00
 sg6
 I3
 sg7
-S'CHAR(512)'
+S'VARCHAR(512)'
 p18
 sg9
 I00
@@ -65,7 +65,7 @@ I00
 sg6
 I1
 sg7
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
+S'INT AUTO_INCREMENT NOT NULL'
 p21
 sg9
 I00

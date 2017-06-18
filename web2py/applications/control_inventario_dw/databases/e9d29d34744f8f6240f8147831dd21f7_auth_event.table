@@ -13,7 +13,7 @@ p6
 I5
 sS'sql'
 p7
-S'CHAR(512)'
+S'VARCHAR(512)'
 p8
 sS'notnull'
 p9
@@ -32,7 +32,7 @@ I00
 sg6
 I3
 sg7
-S'CHAR(512)'
+S'VARCHAR(512)'
 p14
 sg9
 I00
@@ -48,7 +48,7 @@ I00
 sg6
 I4
 sg7
-S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
+S'INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE'
 p17
 sg9
 I00
@@ -65,7 +65,7 @@ I00
 sg6
 I6
 sg7
-S'TEXT'
+S'LONGTEXT'
 p21
 sg9
 I00
@@ -82,7 +82,7 @@ I00
 sg6
 I2
 sg7
-S'TIMESTAMP'
+S'DATETIME'
 p25
 sg9
 I00
@@ -99,7 +99,7 @@ I00
 sg6
 I1
 sg7
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
+S'INT AUTO_INCREMENT NOT NULL'
 p29
 sg9
 I00

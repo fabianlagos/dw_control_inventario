@@ -166,19 +166,9 @@ def solicitar_producto():
 #Esta funcion la pueden ver el Supervisor y usuarios
 def devolver_productos():
 
-
-#    prestado = (db.inventario.disponible == False)
-
-#    links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
-#             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
-
-#    #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
-#    grid = SQLFORM.grid(consulta, fields=campos, details=False, csv=False, links=links)
-
-#    return dict(grid=grid)
-
     consulta = ((db.inventario.id_producto == db.producto.id)
               & (db.auth_user.id == db.prestacion.id_user)
+              & (db.auth_user.id == auth.user.id)
               & (db.prestacion.fecha_devolucion == None)
               & (db.prestacion.devolucion_pendiente == False)
               & (db.inventario.disponible == False))
@@ -194,10 +184,10 @@ def devolver_productos():
     db.inventario.id.readable = False
 
     links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-minus")]
+    vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-minus")]
 
-    #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
-    grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
+    grid = SQLFORM.grid(consulta, fields=campos, create=False, editable=False, deletable=False, details=False, csv=False, links=links)
+    #grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
 
     return dict(grid=grid)
 
@@ -216,6 +206,7 @@ def devolver():
 
     consulta = ((db.inventario.id_producto == db.producto.id)
               & (db.auth_user.id == db.prestacion.id_user)
+              & (db.auth_user.id == auth.user.id)
               & (db.prestacion.fecha_devolucion == None)
               & (db.prestacion.devolucion_pendiente == False)
               & (db.inventario.disponible == False))
@@ -259,8 +250,8 @@ def productos_prestados():
     links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
              vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-minus")]
 
-    #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
-    grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
+    grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
+    #grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
     return dict(grid=grid)
 
 def devolucion_pendiente():
@@ -285,7 +276,7 @@ def devolucion_pendiente():
 
     db.inventario.id.readable = False
 
-    grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
+    grid = SQLFORM.grid(consulta, fields=campos, create=False, editable=False, deletable=False, details=False, csv=False, links=links)
 
     return dict(grid=grid)
 
@@ -317,6 +308,6 @@ def aprobacion():
 
     db.inventario.id.readable = False
 
-    grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
+    grid = SQLFORM.grid(consulta, fields=campos, create=False, editable=False, deletable=False, details=False, csv=False, links=links)
 
     return grid
