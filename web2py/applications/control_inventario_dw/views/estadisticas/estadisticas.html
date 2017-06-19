@@ -2,16 +2,17 @@
 
 <h1> Estadísticas </h1>
 
+{{if auth.has_membership(group_id='admin'):}}
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#1">Estadisticas Globales </a></li>
-  <li><a data-toggle="tab" href="#2">Productos más pedidos</a></li>
-  <li><a data-toggle="tab" href="#3">Usuario con más prestaciones</a></li>
-
+  <li class="active"><a data-toggle="tab" href="#3">Estadisticas Globales </a></li>
+  <li><a data-toggle="tab" href="#4">Productos más pedidos</a></li>
+  <li><a data-toggle="tab" href="#5">Usuario con más prestaciones</a></li>
 </ul>
 
 <div class="tab-content">
 
-  <div id="1" class="tab-pane fade active in">
+<div id="3" class="tab-pane fade active in">
+
     <h2>Estadisticas Globales</h2>
     <br>
 
@@ -24,22 +25,21 @@
   <li class="list-group-item">Total de devoluciones (Histórico) <span class="badge">{{=TotalDevoluciones}}</span></li>
   </ul>
 
+      <br> <br>
 
-    <br> <br>
 
-  </div>
-  <div id="2" class="tab-pane fade">
+</div>
+
+  <div id="4" class="tab-pane fade">
     <h3>Productos más pedidos</h3>
     <figure>
       <embed style='width:80%;' type="image/svg+xml" src="{{=ProductosMasPedidos}}" />
 
     </figure>
 
-
-
   </div>
 
-  <div id="3" class="tab-pane fade">
+  <div id="5" class="tab-pane fade">
     <h3>Usuario con más prestaciones</h3>
     <figure>
       <embed style='width:80%;' type="image/svg+xml" src="{{=UsuariosMasPrestaciones}}" />
@@ -50,3 +50,131 @@
   </div>
 
 </div>
+
+{{pass}}
+<!-- TERMINA ADMIN -->
+
+<!-- EMPIEZA SUPERVISOR -->
+{{if auth.has_membership(group_id='supervisor'):}}
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#1">Estadisticas Personales </a></li>
+  <li><a data-toggle="tab" href="#2">Historial personal </a></li>
+  <li><a data-toggle="tab" href="#3">Estadisticas Globales </a></li>
+  <li><a data-toggle="tab" href="#4">Productos más pedidos</a></li>
+  <li><a data-toggle="tab" href="#5">Usuario con más prestaciones</a></li>
+</ul>
+
+<div class="tab-content">
+
+<div id="1" class="tab-pane fade active in">
+
+  <h3> Estadísticas personales de {{=auth.user.username}} </h3>
+  <ul class="list-group">
+  <li class="list-group-item">Productos prestados (Actualmente)<span class="badge">{{=pTotalPeticiones}}</span></li>
+  <li class="list-group-item">Productos devueltos aprobados (Actualmente)<span class="badge">{{=pTotalDevoluciones}}</span></li>
+  <li class="list-group-item">Productos devueltos pendientes de aprobacion (Actualmente)<span class="badge">0</span></li>
+  <li class="list-group-item">Total de productos prestados (Histórico) <span class="badge">{{=pTotalPrestaciones}}</span></li>
+
+</ul>
+
+
+</div>
+
+
+<div id="3" class="tab-pane fade">
+
+    <h2>Estadisticas Globales</h2>
+    <br>
+
+    <ul class="list-group">
+  <li class="list-group-item">Total usuarios en el sistema (Actualmente)<span class="badge">{{=TotalUsuarios}}</span></li>
+  <li class="list-group-item">Total de productos en el catalogo (Actualmente)<span class="badge">{{=TotalProductos}}</span></li>
+  <li class="list-group-item">Total de productos disponibles en el inventario (Actualmente)<span class="badge">{{=TotalInventarioDisponibles}}</span></li>
+  <li class="list-group-item">Total de productos prestados (Actualmente) <span class="badge">{{=TotalInventarioPrestado}}</span></li>
+  <li class="list-group-item">Total de prestaciones (Histórico)<span class="badge">{{=TotalPrestaciones}}</span></li>
+  <li class="list-group-item">Total de devoluciones (Histórico) <span class="badge">{{=TotalDevoluciones}}</span></li>
+  </ul>
+
+      <br> <br>
+
+  </div>
+
+
+  <div id="2" class="tab-pane fade">
+    <h3>Historial usuario</h3>
+    <figure>
+      <embed style='width:80%;' type="image/svg+xml" src="{{=HistorialUsuario}}" />
+
+    </figure>
+
+    <h4> Datos historicos </h4>
+
+    {{=grid}}
+
+    <br>
+
+  </div>
+
+  <div id="4" class="tab-pane fade">
+    <h3>Productos más pedidos</h3>
+    <figure>
+      <embed style='width:80%;' type="image/svg+xml" src="{{=ProductosMasPedidos}}" />
+
+    </figure>
+
+  </div>
+
+  <div id="5" class="tab-pane fade">
+    <h3>Usuario con más prestaciones</h3>
+    <figure>
+      <embed style='width:80%;' type="image/svg+xml" src="{{=UsuariosMasPrestaciones}}" />
+
+    </figure>
+
+  </div>
+
+</div>
+{{pass}}
+<!-- TERMINA SUPERVISOR -->
+
+<!-- EMPIEZA USUARIO NORMAL -->
+
+{{if auth.has_membership(group_id='user_basic'):}}
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#1">Estadisticas Personales </a></li>
+  <li><a data-toggle="tab" href="#2">Historial personal </a></li>
+</ul>
+
+<div class="tab-content">
+
+<div id="1" class="tab-pane fade active in">
+
+  <h3> Estadísticas personales de {{=auth.user.username}} </h3>
+  <ul class="list-group">
+  <li class="list-group-item">Productos prestados (Actualmente)<span class="badge">{{=pTotalPeticiones}}</span></li>
+  <li class="list-group-item">Productos devueltos aprobados (Actualmente)<span class="badge">{{=pTotalDevoluciones}}</span></li>
+  <li class="list-group-item">Productos devueltos pendientes de aprobacion (Actualmente)<span class="badge">0</span></li>
+  <li class="list-group-item">Total de productos prestados (Histórico) <span class="badge">{{=pTotalPrestaciones}}</span></li>
+
+</ul>
+
+
+
+</div>
+
+<div id="2" class="tab-pane fade">
+    <h3>Historial usuario</h3>
+    <figure>
+      <embed style='width:80%;' type="image/svg+xml" src="{{=HistorialUsuario}}" />
+
+      <h4> Datos historicos </h4>
+
+      {{=grid}}
+
+      <br>
+
+</div>
+
+{{pass}}

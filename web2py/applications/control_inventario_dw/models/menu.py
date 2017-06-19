@@ -65,7 +65,8 @@ def _():
                 (T('Estadisticas'), False, URL('estadisticas','estadisticas')),
                 (T('Registros Inventario'), False, URL('logs','registros_inventario')),
                 (T('Registros Productos'), False, URL('logs','registros_productos')),
-            ])
+            ]),
+            (T('Recomendaciones'), False, URL('estadisticas','lista_recomendacion'))
 
         ]
     if auth.has_membership(group_id='supervisor'):
@@ -81,8 +82,10 @@ def _():
                 (T('Estadisticas'), False, URL('estadisticas','estadisticas')),
                 (T('Registros Inventario'), False, URL('logs','registros_inventario')),
                 (T('Registros Productos'), False, URL('logs','registros_productos'))
-            ])
+            ]),
+            (T('Recomendaciones'), False, URL('estadisticas','lista_recomendacion'))
         ]
+
     if auth.has_membership(group_id='user_basic'):
         response.menu += [
 
@@ -90,9 +93,9 @@ def _():
                 (T('Inventario'), False, URL('gestion_inventario', 'inventario')),
                 (T('Devolver producto'), False, URL('gestion_inventario','devolver_productos'))
             ]),
-            (T('Estadisticas y Registros'), False, '#', [
-                (T('Estadisticas'), False, URL('estadisticas','estadisticas'))
-            ])
+            (T('Estadisticas'), False, URL('estadisticas','estadisticas')),
+            (T('Recomendacion'), False, URL('estadisticas','crear_recomendacion'))
+
         ]
 
 

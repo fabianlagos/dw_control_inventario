@@ -85,6 +85,15 @@
      </div>
 
     {{pass}}
+
+    {{ if auth.has_membership(group_id='admin') and db(db.recomendacion.activa == True).isempty() == False :}}
+
+  <div class="alert alert-info alert-dismissable fade in">
+       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+       <strong>¡Información!</strong> Tienes recomendacion(es) pendiente(s) para  <u><a href="/control_inventario_dw/estadisticas/lista_recomendacion"> ver</a></u>.
+     </div>
+
+    {{pass}}
     <div class="container-fluid main-container">
       {{if left_sidebar_enabled:}}
         <div class="col-md-3 left-sidebar">

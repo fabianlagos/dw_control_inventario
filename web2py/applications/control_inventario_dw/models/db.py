@@ -153,6 +153,13 @@ db.define_table('logs_producto',
                 Field('fecha', 'datetime'),
                 Field('descripcion'))
 
+db.define_table('recomendacion',
+                Field('id_user'),
+                Field('username'),
+                Field('titulo', 'string'),
+                Field('mensaje', 'text'),
+                Field('fecha', 'datetime'),
+                Field('activa', 'boolean', default=True))
 
 if (db(db.auth_group).isempty()):
     auth.add_group('admin', 'admin')

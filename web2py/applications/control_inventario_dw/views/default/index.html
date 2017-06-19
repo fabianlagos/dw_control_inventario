@@ -1,24 +1,40 @@
-{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+
 {{extend 'layout.html'}}
 
-{{block header}}
+<div class="jumbotron">
+      <div class="container">
+        <h1 class="display-3"><img src="/control_inventario_dw/static/images/logo_itsec2.png" alt="Logo ITsec" /> Bienvendo al inventario </h1>
+
+        <p>Control de inventario de la empresa ITsec, con el objetivo de ordenar, disponibilizar y gestionar los recursos para la disposición de los elementos al personal de la empresa.</p>
+        <p><a class="btn btn-primary btn-lg" href="{{=URL('gestion_inventario', 'inventario')}}" role="button">Ver productos disponibles&raquo;</a></p>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Estadísticas</h2>
+          <p>Nos posibilita cuantificar la realidad y disponer de los elementos que nos permitan mejorar las decisiones en caso de necesitarse para el apoyo de los empleados. </p>
+          <p><a class="btn btn-secondary" href="{{=URL('estadisticas', 'estadisticas')}}" role="button">Ver más &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <br>
+          <p><img src="/control_inventario_dw/static/images/inventario.png" alt="Logo ITsec" witdh='150px' height="150px" /> </p>
+       </div>
+        <div class="col-md-4">
+          <h2>Registro</h2>
+          <p>Para poder ingresar al sistema, debes pertenecer a la empresa ITsec y enviar un correo de solicitud de registro con tus datos al admin@itsec.cl</p>
+          <p><a class="btn btn-secondary" href="#" role="button">Ver más &raquo;</a></p>
+        </div>
+      </div>
+<br>
+</div>
 
 
-
-{{end}}
-
-{{if 'message' in globals():}}
+<!--
 <h2>{{=message}}</h2>
 <a href="/control_inventario_dw/default/index">
 <img src="/control_inventario_dw/static/images/logo_itsec.png" alt="Mi Logo" />
 <a/>
-{{elif 'content' in globals():}}
-{{=content}}
-{{else:}}
-{{=BEAUTIFY(response._vars)}}
-{{pass}}
-
-{{block right_sidebar}}
-
-
-{{end}}
+-->

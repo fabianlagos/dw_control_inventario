@@ -130,3 +130,24 @@ CREATE TABLE logs_producto(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 success!
+timestamp: 2017-06-18T23:42:57.961685
+CREATE TABLE recomendacion(
+    id INT AUTO_INCREMENT NOT NULL,
+    id_user VARCHAR(512),
+    username VARCHAR(512),
+    titulo VARCHAR(512),
+    mensaje LONGTEXT,
+    fecha DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-06-19T00:07:24.972955
+ALTER TABLE recomendacion ADD activaboolean VARCHAR(512);
+success!
+success!
+timestamp: 2017-06-19T00:10:42.069716
+ALTER TABLE recomendacion ADD activa CHAR(1);
+success!
+timestamp: 2017-06-19T00:10:42.447864
+ALTER TABLE recomendacion DROP COLUMN activaboolean;
+success!

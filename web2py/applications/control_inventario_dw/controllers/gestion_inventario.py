@@ -77,11 +77,11 @@ def AprobarInventario(id_prestacion, id_producto_solicitado, id_user):
     try:
         #Cambia el estado del producto en prestaciones a Falso, con lo que se cumplen las condiciones de
         #disponibilidad del producto (aprobacion_pendiente y devolucion_pendiente = False)
-        db(db.prestacion.id_inventario == id_prestacion).update( devolucion_pendiente = False,
+        db(db.prestacion.id == id_prestacion).update( devolucion_pendiente = False,
                                                                  fecha_devolucion = datetime.now().strftime('%Y-%m-%d_%H:%M:%S'))
 
         #Cambia el estado del producto en el inventario y lo marca como disponible.
-        db(db.inventario.id == id_prestacion).update(disponible = True)
+        db(db.inventario.id == id_producto_solicitado).update(disponible = True)
 
     except:
         db.logs_inventario.insert(id_user=id_user,
@@ -103,6 +103,7 @@ def AprobarInventario(id_prestacion, id_producto_solicitado, id_user):
     return "El producto ha sido devuelto al inventario correctamente."
 
 #Esta es la vista Inventario
+@auth.requires_login()
 def inventario():
 
     #SELECT producto.nombre, inventario.n_serie, inventario.descripcion FROM producto, inventario
@@ -159,32 +160,42 @@ def solicitar_producto():
     links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto',
              vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-plus")]
 
-    grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
+    if auth.has_membership(group_id='admin'):
+        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False)
+
+    else:
+        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, links=links)
 
     return grid
 
 #Esta funcion la pueden ver el Supervisor y usuarios
 def devolver_productos():
 
-    consulta = ((db.inventario.id_producto == db.producto.id)
-              & (db.auth_user.id == db.prestacion.id_user)
-              & (db.auth_user.id == auth.user.id)
+    consulta = ((auth.user.id == db.prestacion.id_user)
               & (db.prestacion.fecha_devolucion == None)
               & (db.prestacion.devolucion_pendiente == False)
-              & (db.inventario.disponible == False))
+              & (db.inventario.disponible == False)
+              & (db.prestacion.id_inventario == db.inventario.id)
+              & (db.inventario.id_producto == db.producto.id) )
 
     campos = [db.inventario.id,
               db.producto.nombre,
               db.inventario.n_serie,
               db.inventario.descripcion,
               db.producto.marca,
-              db.producto.modelo,
-              db.auth_user.username ]
+              db.producto.modelo ]
 
+    """
+
+    consulta = (db.prestacion.fecha_devolucion == None) & (db.prestacion.id_user == auth.user.id)
+
+    campos = [db.prestacion.id]
+
+    """
     db.inventario.id.readable = False
 
     links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
-    vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-minus")]
+    vars={'id' : row.inventario.id }),_onclick="confirm('Estas seguro que deseas pedir este producto?')" , target='t', _class="btn btn-default glyphicon glyphicon-minus")]
 
     grid = SQLFORM.grid(consulta, fields=campos, create=False, editable=False, deletable=False, details=False, csv=False, links=links)
     #grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
@@ -204,27 +215,26 @@ def devolver():
 
     #aquí van los insert a prestaciones
 
-    consulta = ((db.inventario.id_producto == db.producto.id)
-              & (db.auth_user.id == db.prestacion.id_user)
-              & (db.auth_user.id == auth.user.id)
+    consulta = ((auth.user.id == db.prestacion.id_user)
               & (db.prestacion.fecha_devolucion == None)
               & (db.prestacion.devolucion_pendiente == False)
-              & (db.inventario.disponible == False))
+              & (db.inventario.disponible == False)
+              & (db.prestacion.id_inventario == db.inventario.id)
+              & (db.inventario.id_producto == db.producto.id) )
 
     campos = [db.inventario.id,
               db.producto.nombre,
               db.inventario.n_serie,
               db.inventario.descripcion,
               db.producto.marca,
-              db.producto.modelo,
-              db.auth_user.username ]
+              db.producto.modelo]
 
     db.inventario.id.readable = False
 
     links = [lambda row: A('Devolver', callback=URL('gestion_inventario', 'devolver',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-minus")]
+    vars={'id' : row.inventario.id }), _onclick="confirm('Estas seguro que deseas pedir este producto?')" , target='t', _class="btn btn-default glyphicon glyphicon-minus")]
 
-    grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, links=links)
+    grid = SQLFORM.grid(consulta, fields=campos, create=False, editable=False, deletable=False, details=False, csv=False, links=links)
 
     return grid
 
@@ -263,9 +273,9 @@ def devolucion_pendiente():
                 & (db.prestacion.devolucion_pendiente == True))
 
     links = [lambda row: A('Aprobacion', callback=URL('gestion_inventario', 'aprobacion',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+             vars={'id' : row.prestacion.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
 
-    campos = [db.inventario.id,
+    campos = [db.prestacion.id,
               db.producto.nombre,
               db.inventario.n_serie,
               db.inventario.descripcion,
@@ -274,7 +284,7 @@ def devolucion_pendiente():
               db.auth_user.username,
               db.prestacion.fecha_prestacion ]
 
-    db.inventario.id.readable = False
+    db.prestacion.id.readable = False
 
     grid = SQLFORM.grid(consulta, fields=campos, create=False, editable=False, deletable=False, details=False, csv=False, links=links)
 
@@ -294,10 +304,8 @@ def aprobacion():
                 & (db.inventario.disponible == False)
                 & (db.prestacion.devolucion_pendiente == True))
 
-    links = [lambda row: A('Aprobacion', callback=URL('gestion_inventario', 'aprobacion',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
 
-    campos = [db.inventario.id,
+    campos = [db.prestacion.id,
               db.producto.nombre,
               db.inventario.n_serie,
               db.inventario.descripcion,
@@ -306,7 +314,11 @@ def aprobacion():
               db.auth_user.username,
               db.prestacion.fecha_prestacion ]
 
-    db.inventario.id.readable = False
+    db.prestacion.id.readable = False
+
+    links = [lambda row: A('Aprobacion', callback=URL('gestion_inventario', 'aprobacion',
+             vars={'id' : row.prestacion.id }), target='t', _class="btn btn-default btn-md glyphicon-ok-sign")]
+
 
     grid = SQLFORM.grid(consulta, fields=campos, create=False, editable=False, deletable=False, details=False, csv=False, links=links)
 
