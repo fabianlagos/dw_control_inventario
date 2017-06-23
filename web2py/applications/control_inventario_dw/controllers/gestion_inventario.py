@@ -112,12 +112,15 @@ def inventario():
     #Falta agregar la categoria a los campos, para mostrarlos en la vista
     consulta = ((db.inventario.id_producto == db.producto.id) & (db.inventario.disponible == True))
 
+
     campos = [db.inventario.id,
               db.producto.nombre,
               db.inventario.n_serie,
               db.inventario.descripcion,
               db.producto.marca,
               db.producto.modelo]
+
+    maxtextlength = {'inventario.descripcion' : 50}
 
     db.inventario.id.readable = False
 
@@ -127,10 +130,10 @@ def inventario():
 
     #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
     if auth.has_membership(group_id='admin'):
-        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False)
+        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, maxtextlength=maxtextlength)
 
     else:
-        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, links=links)
+        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, editable=False, links=links, maxtextlength=maxtextlength)
 
     return dict(grid=grid)
 
@@ -146,6 +149,7 @@ def solicitar_producto():
 
     #¿aquí van los insert a prestaciones?
 
+
     consulta = ((db.inventario.id_producto == db.producto.id) & (db.inventario.disponible == True))
 
     campos = [db.inventario.id,
@@ -155,16 +159,18 @@ def solicitar_producto():
               db.producto.marca,
               db.producto.modelo]
 
+    maxtextlength = {'inventario.descripcion' : 50}
+
     db.inventario.id.readable = False
 
     links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto',
-             vars={'id' : row.inventario.id }), target='t', _class="btn btn-default glyphicon glyphicon-plus")]
+             vars={'id' : row.inventario.id }), _onclick="confirm('Estas seguro que deseas pedir este producto?')", target='t', _class="btn btn-default glyphicon glyphicon-plus")]
 
     if auth.has_membership(group_id='admin'):
-        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False)
+        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, maxtextlength=maxtextlength)
 
     else:
-        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, links=links)
+        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, editable=False, links=links, maxtextlength=maxtextlength)
 
     return grid
 
@@ -301,9 +307,9 @@ def aprobacion():
 
     consulta = ((db.prestacion.id_inventario == db.inventario.id)
                 & (db.inventario.id_producto == db.producto.id)
+                & (db.auth_user.id == db.prestacion.id_user)
                 & (db.inventario.disponible == False)
                 & (db.prestacion.devolucion_pendiente == True))
-
 
     campos = [db.prestacion.id,
               db.producto.nombre,

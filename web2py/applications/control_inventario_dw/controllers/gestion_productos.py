@@ -68,19 +68,22 @@ def OnDelete(table, id_producto):
 
 def productos():
     #Esto es un SELECT * FROM db.producto
-    consulta = db.producto
+    consulta = (db.producto.id == db.categoria_producto.id_producto) & (db.categoria.id == db.categoria_producto.id_categoria)
 
+    fields = [db.producto.nombre, db.producto.marca, db.producto.modelo, db.categoria.nombre]
     db.producto.id.readable = False
 
-    if auth.has_membership(group_id='admin'):
-        links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.id]), _class="btn btn-default glyphicon glyphicon-plus")]
+    headers = {'categoria.nombre': 'Categoria' }
 
-        grid = SQLFORM.grid(consulta, create=False, csv=False, ondelete=OnDelete, links=links, details=auth.has_membership('admin'), editable=auth.has_membership('admin'), deletable=auth.has_membership('admin'))
+    if auth.has_membership(group_id='admin'):
+        links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.producto.id]), _class="btn btn-default glyphicon glyphicon-plus")]
+
+        grid = SQLFORM.grid(consulta, create=False, headers=headers, fields=fields, csv=False, ondelete=OnDelete, links=links, details=auth.has_membership('admin'), editable=auth.has_membership('admin'), deletable=auth.has_membership('admin'))
 
     else:
-        links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.id]), _class="btn btn-default glyphicon glyphicon-plus")]
+        links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.producto.id]), _class="btn btn-default glyphicon glyphicon-plus")]
 
-        grid = SQLFORM.grid(consulta, create=False, csv=False, ondelete=OnDelete, details=False, editable=False, deletable=False)
+        grid = SQLFORM.grid(consulta, create=False, headers=headers, fields=fields, csv=False, ondelete=OnDelete, details=False, editable=False, deletable=False)
 
     return dict(grid=grid)
 
