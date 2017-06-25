@@ -1,26 +1,123 @@
-{{extend 'layout.html'}}
+{{include 'web2py_ajax.html'}}
+<!DOCTYPE html>
+<html lang="en">
 
-<h2>
-{{=T('Sign Up') if request.args(0) == 'register' else T('Log In') if request.args(0) == 'login' else T(request.args(0).replace('_',' ').title())}}
-</h2>
+<head>
 
-<div class="container">
-    <div class="row">
-        <div id="web2py_user_form" class="col-lg-6">
-        {{
-        if request.args(0)=='login':
-            if not 'register' in auth.settings.actions_disabled:
-                form.add_button(T('Sign Up'),URL(args='register', vars={'_next': request.vars._next} if request.vars._next else None),_class='btn btn-default')
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta charset="utf-8">
+    <!-- www.phpied.com/conditional-comments-block-downloads/ -->
+    <!-- Always force latest IE rendering engine
+         (even in intranet) & Chrome Frame
+         Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge{{=not request.is_local and ',chrome=1' or ''}}">
+    <!--  Mobile Viewport Fix
+          j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag
+          device-width: Occupy full width of the screen in its current orientation
+          initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+          user-scalable = yes allows the user to zoom in -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{=response.title or request.application}}</title>
+    <!-- http://dev.w3.org/html5/markup/meta.name.html -->
+    <meta name="application-name" content="{{=request.application}}">
+    <!-- Speaking of Google, don't forget to set your site up:
+         http://google.com/webmasters -->
+    <meta name="google-site-verification" content="">
+
+    <!-- All JavaScript at the bottom, except for Modernizr which enables
+         HTML5 elements & feature detects -->
+    <script src="{{=URL('static','js/modernizr-2.8.3.min.js')}}"></script>
+
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../static/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../static/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+
+  <link rel="stylesheet" href="{{=URL('static','css/web2py-bootstrap3.css')}}"/>
+
+
+
+    <!-- jQuery -->
+    <script src="../../static/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../static/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../../static/dist/js/sb-admin-2.js"></script>
+
+  <div class="w2p_flash alert alert-dismissable">{{=response.flash or ''}}</div>
+
+    <div class="container">
+
+        <div class="row">
+
+          <div class="col-md-6 col-md-offset-3" >
+          <h1>   <img src="/control_inventario_dw/static/images/logo_itsec2.png" alt="Logo ITsec" style='margin-bottom: 10px; margin-right: 10px'/> Control de Inventario </h1>
+
+              <div class="login-panel panel panel-default" style='margin-top: -10px;'>
+                  <div class="panel-heading">
+                      <h3 class="panel-title">Please Sign In</h3>
+                  </div>
+                  <div id="web2py_user_form" class="panel-body">
+
+            {{
+            if request.args(0)=='login':
+                if not 'register' in auth.settings.actions_disabled:
+                    form.add_button(T('Sign Up'),URL(args='register', vars={'_next': request.vars._next} if request.vars._next else None),_class='btn btn-default')
+                pass
+                if not 'request_reset_password' in auth.settings.actions_disabled:
+                    form.add_button(T('Lost Password'),URL(args='request_reset_password'),_class='btn btn-default')
+                pass
             pass
-            if not 'request_reset_password' in auth.settings.actions_disabled:
-                form.add_button(T('Lost Password'),URL(args='request_reset_password'),_class='btn btn-default')
+            strings = form.elements(_class='col-sm-9')
+            for s in strings:
+                s['_class'] = 'col-sm-7'
             pass
-        pass
-        =form
-        }}
+            =form
+            }}
+
         </div>
     </div>
-</div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+</body>
+
+</html>
+
 
 
 {{block page_js}}
