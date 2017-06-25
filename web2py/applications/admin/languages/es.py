@@ -217,6 +217,7 @@
 'Help': 'ayuda',
 'here': 'aquí',
 'htmledit': 'htmledit',
+'If the report above contains a ticket number it indicates a failure in executing the controller, before any attempt to execute the doctests. This is usually due to an indentation error or an error outside function code.\n\t\tA green title indicates that all tests (if defined) passed. In this case test results are not shown.': 'If the report above contains a ticket number it indicates a failure in executing the controller, before any attempt to execute the doctests. This is usually due to an indentation error or an error outside function code.\n\t\tA green title indicates that all tests (if defined) passed. In this case test results are not shown.',
 'If the report above contains a ticket number it indicates a failure in executing the controller, before any attempt to execute the doctests. This is usually due to an indentation error or an error outside function code.\nA green title indicates that all tests (if defined) passed. In this case test results are not shown.': 'Si el reporte anterior contiene un número de tiquete este indica un falla en la ejecución del controlador, antes de cualquier intento de ejecutat doctests. Esto generalmente se debe a un error en la indentación o un error por fuera del código de la función.\r\nUn titulo verde indica que todas las pruebas pasaron (si existen). En dicho caso los resultados no se muestran.',
 'Image': 'Imagen',
 'Import/Export': 'Importar/Exportar',
