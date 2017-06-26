@@ -151,3 +151,6 @@ success!
 timestamp: 2017-06-19T00:10:42.447864
 ALTER TABLE recomendacion DROP COLUMN activaboolean;
 success!
+timestamp: 2017-06-25T14:56:15.378611
+ALTER TABLE inventario ADD imagen VARCHAR(512);
+success!

@@ -1,4 +1,4 @@
-def AgregarInventario(id_producto, n_serie, descripcion, id_user):
+def AgregarInventario(id_producto, n_serie, descripcion, id_user, imagen):
 
     from datetime import datetime
 
@@ -7,7 +7,7 @@ def AgregarInventario(id_producto, n_serie, descripcion, id_user):
     nombre_producto = db(db.producto.id == id_producto).select(db.producto.nombre)[0].get('nombre')
 
     try:
-        db.inventario.insert(id_producto=id_producto, n_serie=n_serie, descripcion=descripcion)
+        db.inventario.insert(id_producto=id_producto, n_serie=n_serie, descripcion=descripcion, imagen=imagen)
 
     except:
         db.logs_producto.insert(id_user=id_user,
@@ -90,14 +90,14 @@ def productos():
 
 def agregarainventario():
 
-    form = SQLFORM(db.inventario, fields=['n_serie', 'descripcion'])
+    form = SQLFORM(db.inventario, fields=['n_serie', 'descripcion', 'imagen'])
 
     idproducto=request.args[0]
     nombre_producto = db(db.producto.id == idproducto).select(db.producto.nombre)[0].get('nombre')
     #cantidad=1
     if form.validate():
         #while cantidad>0:
-        mensaje = AgregarInventario(idproducto, form.vars.n_serie, form.vars.descripcion, auth.user.id)
+        mensaje = AgregarInventario(idproducto, form.vars.n_serie, form.vars.descripcion, auth.user.id, form.vars.imagen)
             #db.inventario.insert(id_producto=idproducto, n_serie=form.vars.n_serie, descripcion=form.vars.descripcion)
         session.flash = mensaje
         #    cantidad=cantidad-1
@@ -111,7 +111,6 @@ def crear_producto():
         categorias.append(row.nombre)
     #categorias = db().select(db.categoria.nombre)
 
-    print categorias
 
     form = SQLFORM.factory(
         db.producto,

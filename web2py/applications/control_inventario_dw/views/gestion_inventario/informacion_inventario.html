@@ -1,0 +1,17 @@
+{{extend 'layout.html'}}
+
+<h1> Producto Disponible </h1>
+<div class="panel panel-success">
+      <div class="panel-heading">Información producto</div>
+      <div class="panel-body">Nombre: {{=query.producto['nombre']}}</div>
+      <div class="panel-body">Modelo: {{=query.producto['modelo']}}</div>
+      <div class="panel-body">Marca: {{=query.producto['marca']}}</div>
+      <div class="panel-body">Número de serie: {{=query.inventario['n_serie']}}</div>
+      <div class="panel-body">Descripción: {{=query.inventario['descripcion']}}</div>
+
+      {{if hay_imagen:}}
+        <div class="panel-body">Imagen: <img src="{{=URL('default', 'download', args=query.inventario['imagen'])}}" /></div>
+      {{else:}}
+        <div class="panel-body">Imagen: No hay imagen para este producto </div>
+        {{pass}}
+    </div>

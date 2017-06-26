@@ -120,7 +120,8 @@ db.define_table('inventario',
                 Field('id_producto', db.producto),
                 Field('n_serie', 'string'),
                 Field('descripcion', 'string'),
-                Field('disponible', 'boolean', default=True))
+                Field('disponible', 'boolean', default=True),
+                Field('imagen', 'upload'))
 
 db.define_table('categoria',
                 Field('nombre', 'string'),

@@ -77,7 +77,7 @@
     {{end}}
     <!-- Main ========================================= -->
     <!-- Begin page content -->
-    {{ if auth.has_membership(group_id='admin') and db(db.prestacion.devolucion_pendiente == True).isempty() == False :}}
+    {{ if auth.has_membership(group_id='admin') and db((db.prestacion.devolucion_pendiente == True) & (db.prestacion.fecha_devolucion == None)).isempty() == False :}}
 
     <div class="alert alert-warning alert-dismissable fade in">
        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
