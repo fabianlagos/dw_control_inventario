@@ -1,0 +1,15 @@
+{{extend 'layout.html'}}
+<h1> Ver recomendación del usuario "{{=record.username}}" </h1>
+<br>
+
+<div class="panel panel-success col-sm-5">
+      <div class="panel-heading">Información recomendación</div>
+      <div class="panel-body">Fecha: {{=record.fecha}}</div>
+      <div class="panel-body">Titulo: {{=record.titulo}}</div>
+      <div class="panel-body">Mensaje: {{=record.mensaje}}</div>
+
+</div>
+
+  {{=form}}
+
+  <br><br>

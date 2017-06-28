@@ -1,0 +1,30 @@
+{{extend 'layout.html'}}
+
+<h1> Producto Disponible </h1>
+<br>
+
+<div class="row">
+    <div class="col-sm-4">
+      <br>
+{{if hay_imagen:}}
+  <img src="{{=URL('default', 'download', args=query.inventario['imagen'])}}" style="width:320px; height:240px"/>
+{{else:}}
+  <img src="/control_inventario_dw/static/images/Sin_imagen_disponible69.jpg" style="width:320px; height:240px"/>
+  {{pass}}
+  </div>
+    <div class="col-sm-8">
+<div class="panel panel-success col-sm-8">
+      <div class="panel-heading">Información producto</div>
+      <div class="panel-body">Nombre: {{=query.producto['nombre']}}</div>
+      <div class="panel-body">Modelo: {{=query.producto['modelo']}}</div>
+      <div class="panel-body">Marca: {{=query.producto['marca']}}</div>
+      <div class="panel-body">Número de serie: {{=query.inventario['n_serie']}}</div>
+      <div class="panel-body">Descripción: {{=query.inventario['descripcion']}}</div>
+      <div class="panel-body">{{=(A('Solicitar',_href=URL('inventario', vars={'id_inventario': id_inventario}), _class="btn btn-success glyphicon glyphicon-plus")) }}</div>
+
+</div>
+    </div>
+    </div>
+
+<br><br>
+</br>

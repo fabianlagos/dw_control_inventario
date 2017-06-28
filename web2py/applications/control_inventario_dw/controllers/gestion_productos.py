@@ -44,7 +44,26 @@ def CrearProducto(id_producto, id_user, estado):
         return "Producto creado"
 
     return "Error: No se pudo crear el producto"
+"""
+def EditarProducto(id_producto, id_user):
+    from datetime import datetime
 
+    fecha_actual = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+
+    nombre_producto = db(db.producto.id == id_producto).select(db.producto.nombre)[0].get('nombre')
+
+    if estado:
+        db.logs_producto.insert(id_user=id_user,
+                                username=auth.user.username,
+                                id_producto=id_producto,
+                                nombre_producto=nombre_producto,
+                                fecha=fecha_actual,
+                                descripcion="Producto creado")
+
+        return "Producto creado"
+
+    return "Error: No se pudo crear el producto"
+"""
 
 def OnDelete(table, id_producto):
     from datetime import datetime
@@ -76,9 +95,10 @@ def productos():
     headers = {'categoria.nombre': 'Categoria' }
 
     if auth.has_membership(group_id='admin'):
-        links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.producto.id]), _class="btn btn-default glyphicon glyphicon-plus")]
+        links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.producto.id]), _class="btn btn-default glyphicon glyphicon-plus"),
+                 lambda row: A('Editar', _href=URL('editar_producto', args=[row.producto.id]), _class="btn btn-default glyphicon glyphicon-pencil")]
 
-        grid = SQLFORM.grid(consulta, create=False, headers=headers, fields=fields, csv=False, ondelete=OnDelete, links=links, details=auth.has_membership('admin'), editable=auth.has_membership('admin'), deletable=auth.has_membership('admin'))
+        grid = SQLFORM.grid(consulta, create=False, headers=headers, fields=fields, csv=False, ondelete=OnDelete, links=links,  details=False, editable=False, deletable=auth.has_membership('admin'))
 
     else:
         links = [lambda row: A(' agregar a inventario',_href=URL("agregarainventario",args=[row.producto.id]), _class="btn btn-default glyphicon glyphicon-plus")]
@@ -129,3 +149,19 @@ def crear_producto():
     elif form.errors:
         response.flash = 'form has errors'
     return dict(form=form)
+
+def editar_producto():
+
+    record = db.producto(request.args[0]) or redirect(URL('productos'))
+    form = SQLFORM(db.producto, record, showid=False)
+
+    strings = form.elements(_class='col-sm-9')
+    for s in strings:
+        s['_class'] = 'col-sm-5'
+
+    if form.process().accepted:
+        session.flash = 'Producto editado correctamente'
+        redirect(URL('productos'))
+    elif form.errors:
+        response.flash = 'form has errors'
+    return dict(form=form, record=record)

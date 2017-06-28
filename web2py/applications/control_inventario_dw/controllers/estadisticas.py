@@ -179,6 +179,15 @@ def lista_recomendacion():
 
     fields = [db.recomendacion.username, db.recomendacion.titulo, db.recomendacion.activa]
 
-    grid = SQLFORM.grid(consulta, deletable=False, editable=auth.has_membership('admin'), create=False, fields=fields)
+    links = [lambda row: A(' Ver', _href=URL('ver_recomendacion', args=[row.id]), _class='btn btn-default glyphicon glyphicon-eye-open')]
+
+    grid = SQLFORM.grid(consulta, deletable=False, editable=auth.has_membership('admin'), create=False, fields=fields, links=links)
 
     return dict(grid=grid)
+
+def ver_recomendacion():
+
+    record = db.recomendacion(request.args[0]) or redirect(URL('lista_recomendacion'))
+    form = SQLFORM(db.recomendacion, record, fields=[ 'activa' ], showid=False)
+
+    return dict(form=form, record=record)

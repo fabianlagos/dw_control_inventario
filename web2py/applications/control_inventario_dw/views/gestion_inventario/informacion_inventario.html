@@ -12,6 +12,6 @@
       {{if hay_imagen:}}
         <div class="panel-body">Imagen: <img src="{{=URL('default', 'download', args=query.inventario['imagen'])}}" /></div>
       {{else:}}
-        <div class="panel-body">Imagen: No hay imagen para este producto </div>
+        <div class="panel-body">Imagen: <img src="/control_inventario_dw/static/images/Sin_imagen_disponible69.jpg"</div>
         {{pass}}
     </div>

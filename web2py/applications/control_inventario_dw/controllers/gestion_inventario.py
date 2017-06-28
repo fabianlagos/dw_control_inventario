@@ -131,10 +131,43 @@ def RechazarInventario(id_prestacion, id_producto_solicitado, id_user, user_invo
 
     return "El producto ha sido rechazado"
 
+def RetirarInventario(id_inventario, id_user, razon):
+    from datetime import datetime
+    fecha_actual = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+    nombre_producto = db((db.inventario.id == id_inventario) & (db.inventario.id_producto == db.producto.id)).select(db.producto.nombre)[0].get('nombre')
+
+    try:
+
+        db(db.inventario.id == id_inventario).delete()
+
+    except:
+        db.logs_inventario.insert(id_user=id_user,
+                                   username=auth.user.username,
+                                   id_inventario=id_inventario,
+                                   nombre_producto=nombre_producto,
+                                   fecha=fecha_actual,
+                                   descripcion="Error al retirar el producto del inventario")
+
+        return "Hubo un error, comunicate con el administrador."
+
+    db.logs_inventario.insert(id_user=id_user,
+                               username=auth.user.username,
+                               id_inventario=id_inventario,
+                               nombre_producto=nombre_producto,
+                               fecha=fecha_actual,
+                               descripcion="Se retira el producto del inventario. Razon:"  + razon )
+
+    return "El producto ha sido retirado del inventario"
+
+
 
 #Esta es la vista Inventario
 @auth.requires_login()
 def inventario():
+
+    if request.vars['id_inventario'] != None:
+        if db(db.inventario.id == request.vars['id_inventario']).select(db.inventario.disponible)[0].get('disponible'):
+            response.flash = PrestarInventario(request.vars['id_inventario'], auth.user.id)
 
     #SELECT producto.nombre, inventario.n_serie, inventario.descripcion FROM producto, inventario
         #WHERE producto.id = inventario.id_producto AND inventario.disponible = True
@@ -155,14 +188,16 @@ def inventario():
     db.inventario.id.readable = False
 
 
-    links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto',
-             vars={'id' : row.inventario.id }), _onclick="confirm('Estas seguro que deseas pedir este producto?')", target='t', _class="btn btn-default glyphicon glyphicon-plus"),
+    links = [lambda row: A('Solicitar', _href=URL('gestion_inventario', 'solicitar_producto',
+             vars={'id' : row.inventario.id }), _class="btn btn-default glyphicon glyphicon-plus"),
              lambda row: A('Informacion', _href=URL('informacion_inventario', vars={'id' : row.inventario.id}),  _class="btn btn-default glyphicon glyphicon-plus" )  ]
 
     #grid = SQLFORM.grid(consulta, fields=campos, editable=False, deletable=False, details=False, csv=False)
     if auth.has_membership(group_id='admin'):
-        links = [lambda row: A('Informacion', _href=URL('informacion_inventario', vars={'id' : row.inventario.id}), _class="btn btn-default glyphicon glyphicon-plus")]
-        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, links=links, maxtextlength=maxtextlength)
+        links = [lambda row: A('Informacion', _href=URL('informacion_inventario', vars={'id' : row.inventario.id}), _class="btn btn-default glyphicon glyphicon-plus"),
+                 lambda row: A('Retirar', _href=URL('retirar_inventario', vars={'id_inventario' : row.inventario.id}), _class="btn btn-default 	glyphicon glyphicon-minus"),
+                 lambda row: A('Editar', _href=URL('editar_inventario', vars={'id_inventario': row.inventario.id}), _class="btn btn-default glyphicon glyphicon-pencil")]
+        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, editable=False, links=links, maxtextlength=maxtextlength)
 
     else:
         grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, editable=False, links=links, maxtextlength=maxtextlength)
@@ -172,40 +207,16 @@ def inventario():
 #ajax para solicitar producto (botón)
 def solicitar_producto():
 
-    import inventario
-    #Retrieve value
-    id_producto_solicitado = request.vars['id']
+    id_inventario = request.vars['id']
 
-    #db(db.inventario.id == id_producto_solicitado).update(disponible = False)
-    response.flash = PrestarInventario(id_producto_solicitado, auth.user.id)
+    query = db((db.inventario.id == id_inventario) & (db.inventario.id_producto == db.producto.id)).select(db.inventario.ALL, db.producto.ALL)[0]
 
-    #¿aquí van los insert a prestaciones?
+    hay_imagen = True
+    if query.inventario['imagen'] == None:
+        hay_imagen=False
 
 
-    consulta = ((db.inventario.id_producto == db.producto.id) & (db.inventario.disponible == True))
-
-    campos = [db.inventario.id,
-              db.producto.nombre,
-              db.inventario.n_serie,
-              db.inventario.descripcion,
-              db.producto.marca,
-              db.producto.modelo]
-
-    maxtextlength = {'inventario.descripcion' : 50}
-
-    db.inventario.id.readable = False
-
-    links = [lambda row: A('Solicitar', callback=URL('gestion_inventario', 'solicitar_producto',
-             vars={'id' : row.inventario.id }), _onclick="confirm('Estas seguro que deseas pedir este producto?')", target='t', _class="btn btn-default glyphicon glyphicon-plus"),
-             lambda row: A('Informacion', _href=URL('informacion_inventario', vars={'id' : row.inventario.id}),  _class="btn btn-default glyphicon glyphicon-plus" )  ]
-
-    if auth.has_membership(group_id='admin'):
-        links = [lambda row: A('Informacion', _href=URL('informacion_inventario', vars={'id' : row.inventario.id}), _class="btn btn-default glyphicon glyphicon-plus")]
-        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, links=links, maxtextlength=maxtextlength)
-    else:
-        grid = SQLFORM.grid(consulta, fields=campos, create=False, details=False, csv=False, deletable=False, editable=False, links=links, maxtextlength=maxtextlength)
-
-    return grid
+    return dict(query=query, hay_imagen=hay_imagen, id_inventario=id_inventario)
 
 #Esta funcion la pueden ver el Supervisor y usuarios
 def devolver_productos():
@@ -367,6 +378,31 @@ def aprobacion():
 
     return grid
 
+def retirar_inventario():
+
+    id_inventario = request.vars['id_inventario']
+
+    nombre_producto = db((db.inventario.id == id_inventario) & (db.inventario.id_producto == db.producto.id)).select(db.producto.nombre)[0].get('nombre')
+
+    form = SQLFORM.factory( Field('Razon', 'text', requires=IS_NOT_EMPTY() ) )
+    strings = form.elements(_class='col-sm-9')
+    for s in strings:
+        s['_class'] = 'col-sm-7'
+
+
+    if form.process().accepted:
+
+        session.flash = RetirarInventario(id_inventario, auth.user.id, form.vars.Razon)
+
+        redirect(URL('inventario'))
+
+    elif form.errors:
+       response.flash = 'form has errors'
+    else:
+       response.flash = 'please fill out the form'
+
+    return dict(form=form, nombre_producto=nombre_producto )
+
 def rechazar():
 
     id_prestacion = request.vars['id_prestacion']
@@ -407,3 +443,16 @@ def informacion_inventario():
 
 
     return dict(query=query, hay_imagen=hay_imagen)
+
+def editar_inventario():
+
+    record = db.inventario(request.vars['id_inventario']) or redirect(URL('inventario'))
+    nombre = db(db.producto.id == record.id_producto).select(db.producto.nombre)[0].get('nombre')
+    form = SQLFORM(db.inventario, record, fields=['n_serie', 'descripcion'], showid=False)
+
+    if form.process().accepted:
+        response.flash = 'form accepted'
+        redirect(URL('inventario'))
+    elif form.errors:
+        response.flash = 'form has errors'
+    return dict(form=form, nombre=nombre)
